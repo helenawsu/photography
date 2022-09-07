@@ -3,137 +3,118 @@
   // import { all_tags } from "./create_img.js";
   const photos = [
     {
-      title: 'Trekking',
-      path: './photos/IMG_2043.webp',
+      alt: 'Trekking',
+      src: './photos/IMG_2043.webp',
       original_path: '',
       tags: ['Landscape', 'Europe'],
       time: [2022, 'July', ''],
     },
     {
-      title: 'Melting Origin',
-      path: './photos/IMG_2176.webp',
+      alt: 'Melting Origin',
+      src: './photos/IMG_2176.webp',
       original_path: '',
       tags: ['Landscape', 'Europe'],
       time: [2022, 'July', ''],
     },
     {
-      title: 'A sheep meh like cow',
-      path: './photos/IMG_2214.webp',
+      alt: 'A sheep meh like cow',
+      src: './photos/IMG_2214.webp',
       original_path: '',
       tags: ['Animal', 'Europe'],
       time: [2022, 'July', ''],
     },
   ];
 
-  var show_animal = {
-    bool: false,
-    name: 'Animal',
-  };
-  var show_landscape = {
-    bool: false,
-    name: 'Landscape',
-  };
-  var show_europe = {
-    bool: false,
-    name: 'Europe',
-  };
+  var show_animal = 'Animal';
+  var show_landscape = 'Landscape';
+  var show_europe = 'Europe';
+  var all_tags = [show_animal, show_landscape, show_europe];
+  var show_start_message = true;
+  var no_img_found = false;
+
 
   /**
-   * @type {any[]}
-   */
-  var filtered_tags = [];
+* @type {string | any[]}
+*/
+  var filtered_tags= [];
   /**
    * @type {any[]}
    */
   var filtered_img = [];
   /**
-   * @type {string[]}
-   */
-  var filtered_tag_names = [];
-  function refresh_tags() {
-    filtered_tags = [];
-    filtered_tag_names = [];
-    var all_tags = [show_animal, show_landscape, show_europe];
+* @param {string | any[]} filtered_tags
+*/
+  
+  function refresh(filtered_tags) {
+    filtered_img = [];
 
-    console.log(show_animal.bool);
-    for (var m = 0; m < all_tags.length; m++) {
-      console.log(all_tags[m]);
-      if (all_tags[m].bool){
-        filtered_tags.push(all_tags[m]); 
-        console.log("adding somehting");
+    for (var m = 0; m < photos.length; m++) {
+      var add;
+      if (filtered_tags.length>0){
+        add = true;
+        show_start_message=false;
       }
-      console.log(filtered_tags);
+      else {
+        show_start_message=true;
+        add=false;
+      }
 
-    }
+      for (var n = 0; n < filtered_tags.length; n++) {
 
-    for (var i = 0; i < filtered_tags.length; i++) {
-      filtered_tag_names.push(filtered_tags[i].name);
-    }
-
-    console.log(filtered_tags);
-    for (var k = 0; k < photos.length; k++) {
-      var this_tags = photos[k].tags;
-
-      var add = true;
-      for (var j = 0; j < filtered_tag_names.length; j++) {
-        // @ts-ignore
-        if (!this_tags.includes(filtered_tag_names[j])) {
-          console.log(filtered_tag_names);
+        if (!photos[m].tags.includes(filtered_tags[n])) {
           add = false;
-          console.log("this is false");
         }
-
-        //Do something
       }
       if (add) {
-        filtered_img.push(photos[k]);
-        console.log("final", filtered_img);
+        filtered_img.push(photos[m]);
       }
     }
+    if ((filtered_img.length==0) && (!show_start_message)){
+      no_img_found = true;
+    }
+
+    console.log(filtered_img);
+    return filtered_img;
   }
+  $: filtered_img = refresh(filtered_tags);
 </script>
 
 <main>
-  <p class="lastupdatetime">This page was last updated on Sep 5, 2022.</p>
+  <p class="lastupdatetime">This page was last updated on Sep 6, 2022.</p>
   <h2 style="padding-bottom: 10px">Helena Su's Photos</h2>
-  <div class="flex-container">
-    <div class="flex-items">
-      <label>
-        <input
-          type="checkbox"
-          bind:checked={show_landscape.bool}
-          on:click={refresh_tags}
-        />
-        Landscape
-      </label>
-    </div>
-    <div class="flex-items">
-      <label>
-        <input
-          type="checkbox"
-          bind:checked={show_animal.bool}
-          on:click={refresh_tags}
-        />
-        Animal
-      </label>
-    </div>
-    <div class="flex-items">
-      <label>
-        <input
-          type="checkbox"
-          bind:checked={show_europe.bool}
-          on:click={refresh_tags}
-        />
-        Europe
-      </label>
-    </div>
-  </div>
 
   <br />
 
-  {#each filtered_img as { title, path, original_path, tags, time }}
-    <img src="path," alt="title" />
-    <p>show stuff</p>
+  <div class="flex-container">
+    {#each all_tags as a_tag}
+      <div class="flex-items">
+        <label>
+          <input
+            type="checkbox"
+            bind:group={filtered_tags}
+            name="filtered tags"
+            value={a_tag}
+          />
+          {a_tag}
+        </label>
+      </div>
+    {/each}
+  </div>
+  
+
+  {#if show_start_message}
+    <p>please select as least one tag.</p>
+  {/if}
+
+  {#if no_img_found}
+  <p>No photos are found!!!!</p>
+{/if}
+
+
+
+  {#each filtered_img as a_photo}
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <img {...a_photo}/>
   {/each}
 </main>
 
@@ -207,7 +188,6 @@
     background-color: beige;
     padding-left: 10px;
     padding-right: 10px;
-    padding-top: 5px;
     width: fit-content;
     margin-right: 10px;
   }
