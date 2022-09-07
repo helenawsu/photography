@@ -72,6 +72,9 @@
     if ((filtered_img.length==0) && (!show_start_message)){
       no_img_found = true;
     }
+    else {
+      no_img_found = false;
+    }
 
     console.log(filtered_img);
     return filtered_img;
@@ -80,7 +83,7 @@
 </script>
 
 <main>
-  <p class="lastupdatetime">This page was last updated on Sep 6, 2022.</p>
+  <p class="lastupdatetime">This page was last updated on Sep 7, 2022.</p>
   <h2 style="padding-bottom: 10px">Helena Su's Photos</h2>
 
   <br />
