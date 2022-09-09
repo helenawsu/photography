@@ -8,6 +8,7 @@
       original_path: '',
       tags: ['Landscape', 'Europe'],
       time: [2022, 'July', ''],
+      hv: true,
     },
     {
       alt: 'Melting Origin',
@@ -15,6 +16,7 @@
       original_path: '',
       tags: ['Landscape', 'Europe'],
       time: [2022, 'July', ''],
+      hv: true,
     },
     {
       alt: 'A sheep meh like cow',
@@ -22,6 +24,7 @@
       original_path: '',
       tags: ['Animal', 'Europe'],
       time: [2022, 'July', ''],
+      hv: false,
     },
   ];
 
@@ -83,8 +86,10 @@
 </script>
 
 <main>
-  <p class="lastupdatetime">This page was last updated on Sep 7, 2022.</p>
-  <h2 style="padding-bottom: 10px">Helena Su's Photos</h2>
+<body style="margin: 0px, padding: 0px">
+
+  <p class="lastupdatetime">This page was last updated on Sep 8, 2022.</p>
+  <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
 
@@ -114,21 +119,31 @@
 {/if}
 
 
-
+<div class="flex-container">
   {#each filtered_img as a_photo}
     <!-- svelte-ignore a11y-missing-attribute -->
-    <img {...a_photo}/>
+    <div class="flex-items">
+      {#if a_photo.hv}
+      <img {...a_photo} style="width:500px"/>
+      {:else}
+      <img {...a_photo} style="height:500px"/>
+      {/if}
+    </div>
   {/each}
+</div>
+</body>
 </main>
 
 <style>
   main {
     /* text-align: center; */
     padding: 1em;
+    background-color: #1d1f29;
+    margin:0;
     /* max-width: 240px; */
   }
   .lastupdatetime {
-    color: #bbc3c7;
+    color: #585b6b;
     margin-left: 10px;
     margin-top: 0px;
     text-align: right;
@@ -152,11 +167,15 @@
     font-weight: 100;
   } */
   h2 {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 5rem;
+    font-family: 'Hina Mincho', serif;
+    letter-spacing: 3px; 
+    font-size: 4rem;
     margin: 0px;
     margin-top: 15px;
     text-align: left;
+    color:#f7f7f2;
+    font-stretch: condensed;
+
   }
 
   /* @media screen and (min-width: 601px) {
@@ -182,17 +201,32 @@
   } */
   p {
     font-family: 'Piazzolla', serif;
-    color: #233b4d;
+    color:#e3effa;
     font-size: 1.25rem;
   }
+  img {
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+  @media screen and (max-width: 600px) {
+    img {
+      max-width: 100%;
+      max-height: 25rem;
+      object-fit: contain;
+    }
+  }
+
   label {
     font-family: 'Texturina', serif;
     font-size: 1.5rem;
-    background-color: beige;
+    /* background-color: beige; */
     padding-left: 10px;
     padding-right: 10px;
     width: fit-content;
     margin-right: 10px;
+    color: #faf9f5; 
   }
 
   .flex-container {
@@ -203,8 +237,7 @@
   }
 
   .flex-items {
-    padding: 0px; /* this */
-    /* width: min-content; */
+    padding: 10px; /* this */
   }
 
   @media (min-width: 640px) {
