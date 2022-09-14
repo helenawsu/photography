@@ -706,6 +706,11 @@ detect-newline@3.1.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
   integrity sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==
 
+dialog-polyfill@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/dialog-polyfill/-/dialog-polyfill-0.5.6.tgz#7507b4c745a82fcee0fa07ce64d835979719599a"
+  integrity sha512-ZbVDJI9uvxPAKze6z146rmfUZjBqNEwcnFTVamQzXH+svluiV7swmVIGr7miwADgfgt1G2JQIytypM9fbyhX4w==
+
 diff-match-patch@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/diff-match-patch/-/diff-match-patch-1.0.5.tgz#abb584d5f10cd1196dfc55aa03701592ae3f7b37"
@@ -1041,6 +1046,13 @@ execa@^4.0.3:
     onetime "^5.1.0"
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
+
+exio@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/exio/-/exio-0.4.5.tgz#7f060a37b2c9454d85cf92545f159814d47ea0ef"
+  integrity sha512-+BpOFyyjQo/v3u3YUnEg4T/sPsFafs/8Ga3DRKHzWSznscJXQytko8obqmn6PNoUsKHG1OdH5Fu6JJWXop9oPw==
+  dependencies:
+    dialog-polyfill "^0.5.6"
 
 express-history-api-fallback@^2.2.1:
   version "2.2.1"

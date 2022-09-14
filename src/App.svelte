@@ -1,37 +1,10 @@
 <script>
   //import { photos } from './create_img.js';
   // import { all_tags } from "./create_img.js";
-  const photos = [
-    {
-      alt: 'Trekking',
-      src: './photos/IMG_2043.webp',
-      original_path: '',
-      tags: ['Landscape', 'Europe'],
-      time: [2022, 'July', ''],
-      hv: true,
-    },
-    {
-      alt: 'Melting Origin',
-      src: './photos/IMG_2176.webp',
-      original_path: '',
-      tags: ['Landscape', 'Europe'],
-      time: [2022, 'July', ''],
-      hv: true,
-    },
-    {
-      alt: 'A sheep meh like cow',
-      src: './photos/IMG_2214.webp',
-      original_path: '',
-      tags: ['Animal', 'Europe'],
-      time: [2022, 'July', ''],
-      hv: false,
-    },
-  ];
+  import { exioApp, exioButton, exioCheckbox, exioComponent } from 'exio/svelte';
+  import {photos, all_tags} from "./create_img.js";
 
-  var show_animal = 'Animal';
-  var show_landscape = 'Landscape';
-  var show_europe = 'Europe';
-  var all_tags = [show_animal, show_landscape, show_europe];
+  
   var show_start_message = true;
   var no_img_found = false;
 
@@ -50,12 +23,16 @@
   
   function refresh(filtered_tags) {
     filtered_img = [];
-
+    if (filtered_tags.includes("All")){
+          filtered_img = photos;
+          return filtered_img;
+        }
     for (var m = 0; m < photos.length; m++) {
       var add;
       if (filtered_tags.length>0){
         add = true;
         show_start_message=false;
+
       }
       else {
         show_start_message=true;
@@ -85,24 +62,23 @@
   $: filtered_img = refresh(filtered_tags);
 </script>
 
-<main>
-<body style="margin: 0px, padding: 0px">
+<main style="margin: 0px, padding: 0px">
 
-  <p class="lastupdatetime">This page was last updated on Sep 8, 2022.</p>
+
+  <p class="lastupdatetime">This page was last updated on Sep 13, 2022.</p>
   <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
 
   <div class="flex-container">
     {#each all_tags as a_tag}
-      <div class="flex-items">
+      <div  class="flex-items">
         <label>
-          <input
-            type="checkbox"
-            bind:group={filtered_tags}
-            name="filtered tags"
-            value={a_tag}
-          />
+          <input class="" type="checkbox"
+          bind:group={filtered_tags}
+          name="filtered tags"
+          value={a_tag}/>
+
           {a_tag}
         </label>
       </div>
@@ -124,26 +100,23 @@
     <!-- svelte-ignore a11y-missing-attribute -->
     <div class="flex-items">
       {#if a_photo.hv}
-      <img {...a_photo} style="width:500px"/>
+      <img {...a_photo} style="width:600px"/>
       {:else}
       <img {...a_photo} style="height:500px"/>
       {/if}
     </div>
   {/each}
 </div>
-</body>
 </main>
 
 <style>
   main {
     /* text-align: center; */
     padding: 1em;
-    background-color: #1d1f29;
-    margin:0;
     /* max-width: 240px; */
   }
   .lastupdatetime {
-    color: #585b6b;
+    color: #464d4f;
     margin-left: 10px;
     margin-top: 0px;
     text-align: right;
@@ -173,7 +146,7 @@
     margin: 0px;
     margin-top: 15px;
     text-align: left;
-    color:#f7f7f2;
+    color:#464d4f;
     font-stretch: condensed;
 
   }
@@ -186,7 +159,7 @@
 
   @media screen and (max-width: 600px) {
     h2 {
-      font-size: 2.5rem;
+      font-size: 2.25rem;
       text-align: center;
     }
   }
@@ -201,9 +174,17 @@
   } */
   p {
     font-family: 'Piazzolla', serif;
-    color:#e3effa;
+    color:#d9dbca;
     font-size: 1.25rem;
+    margin: 10px;
+
   }
+  .checkbox-style {
+    --exio-backgroud-color:white;
+    background-color: aliceblue;
+    --accent: orange;
+  }
+
   img {
     display: block;
   margin-left: auto;
@@ -221,12 +202,14 @@
   label {
     font-family: 'Texturina', serif;
     font-size: 1.5rem;
-    /* background-color: beige; */
-    padding-left: 10px;
-    padding-right: 10px;
-    width: fit-content;
+    /* background-image: linear-gradient(to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
     margin-right: 10px;
-    color: #faf9f5; 
+    padding-left: 5px;
+    padding-right: 5px;
+
+    color: #d9dbca; 
+    border-left: solid #ffd900 0.5px;
+    border-right: solid #919cbf 0.5px;
   }
 
   .flex-container {
@@ -238,6 +221,7 @@
 
   .flex-items {
     padding: 10px; /* this */
+    
   }
 
   @media (min-width: 640px) {
