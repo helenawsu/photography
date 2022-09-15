@@ -65,7 +65,7 @@
 <main style="margin: 0px, padding: 0px">
 
 
-  <p class="lastupdatetime">This page was last updated on Sep 14, 2022.</p>
+  <p class="lastupdatetime">This page was last updated on Sep 15, 2022.</p>
   <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
@@ -144,18 +144,12 @@
     letter-spacing: 3px; 
     font-size: 4rem;
     margin: 0px;
-    margin-top: 15px;
+    margin-left: 10px;
     text-align: left;
     color:#464d4f;
     font-stretch: condensed;
 
   }
-
-  /* @media screen and (min-width: 601px) {
-  h2 {
-    font-size: 5rem;
-  }
-} */
 
   @media screen and (max-width: 600px) {
     h2 {
@@ -182,25 +176,42 @@
   .checkbox-format {
     border-color: #464d4f;
     border-width: 1px;
-    display: inline-flex;  
+    display: inline-block;  
     margin-right: 3px;
   }
   .checkbox-format:hover {
-  background-color: #464d4f; 
+  background-color: #d9dbca; 
   border-width: 8px;
 }
 .checkbox-format:hover:not(.checkbox-format-active) {
-  background-color: black; 
+  background-color: #0f0f19; 
   border-width: 1px;
   border-color: #d9dbca;
-
 }
 
-.checkbox-format:checked {
-  background-color: black;
+@media screen and (max-width: 600px) {
+
+  .checkbox-format:hover:not(.checkbox-format-active) {
+    background-color: #0f0f19;
   border-color: #d9dbca;
   border-right-width: 7px;
   border-bottom-width: 7px;
+  color: transparent;
+}
+}
+
+.checkbox-format:checked {
+  background-color: #0f0f19;
+  border-color: #d9dbca;
+  border-right-width: 7px;
+  border-right-color: #d9dbca ;
+
+  border-bottom-width: 7px;
+  border-bottom-color: #d9dbca;
+
+  border-left-width:1px;
+
+  border-top-width:1px;
 
   color: transparent;
 }
@@ -226,20 +237,21 @@
     font-family: 'Texturina', serif;
     font-size: 1.5rem;
     /* background-image: linear-gradient(to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
-    margin-left: 10px;
+    margin-left: 0px;
     padding-right: 10px;
-    padding-left: 0px;
+    padding-left: 15px;
 
     display: block;
     color: #d9dbca; 
-    border-right: solid #ffd900 0.5px;
+    border-left: solid #919cbf 0.5px;
+
     /* border-bottom: solid #919cbf 0.5px; */
 
     /* border-left: solid #464d4f 5px; */
   }
   @media screen and (max-width: 600px) {
     label {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
   }
 

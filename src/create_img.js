@@ -71,6 +71,25 @@ export const photos = [
     time: [2022, '', ''],
     hv: true,
   },
+  {
+    alt: 'White Flower',
+    src: './photos/DSC00683.webp',
+    original_path: '',
+    tags: ['B&W', 'Berkeley'],
+    time: [2022, '', ''],
+    hv: true,
+  },
+  {
+    alt: 'Man Playing Guitar',
+    src: './photos/IMG_1751.webp',
+    original_path: '',
+    tags: ['Street', 'San Francisco'],
+    time: [2022, '', ''],
+    hv: false,
+  },
+  
+
 ];
 
-export var all_tags = ["Animal", "Landscape", "Europe", "Street", "Structure", "San Francisco", "B&W", "All"];
+
+export var all_tags = ["Animal", "Landscape", "Europe", "Street", "Structure", "San Francisco","Berkeley", "B&W", "All"];
