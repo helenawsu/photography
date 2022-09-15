@@ -65,7 +65,7 @@
 <main style="margin: 0px, padding: 0px">
 
 
-  <p class="lastupdatetime">This page was last updated on Sep 13, 2022.</p>
+  <p class="lastupdatetime">This page was last updated on Sep 14, 2022.</p>
   <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
@@ -74,11 +74,10 @@
     {#each all_tags as a_tag}
       <div  class="flex-items">
         <label>
-          <input class="" type="checkbox"
+          <input class="checkbox-format" type="checkbox" use:exioComponent use:exioCheckbox
           bind:group={filtered_tags}
           name="filtered tags"
           value={a_tag}/>
-
           {a_tag}
         </label>
       </div>
@@ -114,6 +113,7 @@
     /* text-align: center; */
     padding: 1em;
     /* max-width: 240px; */
+    /* background-color: beige; */
   }
   .lastupdatetime {
     color: #464d4f;
@@ -179,11 +179,34 @@
     margin: 10px;
 
   }
-  .checkbox-style {
-    --exio-backgroud-color:white;
-    background-color: aliceblue;
-    --accent: orange;
+  .checkbox-format {
+    border-color: #464d4f;
+    border-width: 1px;
+    display: inline-flex;  
+    margin-right: 3px;
   }
+  .checkbox-format:hover {
+  background-color: #464d4f; 
+  border-width: 8px;
+}
+.checkbox-format:hover:not(.checkbox-format-active) {
+  background-color: black; 
+  border-width: 1px;
+  border-color: #d9dbca;
+
+}
+
+.checkbox-format:checked {
+  background-color: black;
+  border-color: #d9dbca;
+  border-right-width: 7px;
+  border-bottom-width: 7px;
+
+  color: transparent;
+}
+.checkbox-format::after {
+  content: none;
+}
 
   img {
     display: block;
@@ -203,13 +226,21 @@
     font-family: 'Texturina', serif;
     font-size: 1.5rem;
     /* background-image: linear-gradient(to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
-    margin-right: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
+    margin-left: 10px;
+    padding-right: 10px;
+    padding-left: 0px;
 
+    display: block;
     color: #d9dbca; 
-    border-left: solid #ffd900 0.5px;
-    border-right: solid #919cbf 0.5px;
+    border-right: solid #ffd900 0.5px;
+    /* border-bottom: solid #919cbf 0.5px; */
+
+    /* border-left: solid #464d4f 5px; */
+  }
+  @media screen and (max-width: 600px) {
+    label {
+      font-size: 1rem;
+    }
   }
 
   .flex-container {
