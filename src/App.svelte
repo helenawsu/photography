@@ -59,7 +59,7 @@
 </script>
 
 <main style="margin: 0px, padding: 0px">
-  <p class="lastupdatetime">This page was last updated on Sep 15, 2022.</p>
+  <p class="lastupdatetime">This page was last updated on Sep 18, 2022.</p>
   <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
@@ -217,7 +217,17 @@
   }
   .checkbox-format {
     display: inline-flex;
+    border-color: #919cbf;
+
+
   }
+  .checkbox-format:hover {
+    --exio-hover-border-color: white;
+
+
+  }
+
+
 
   @media screen and (max-width: 600px) {
   }

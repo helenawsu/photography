@@ -44,6 +44,6 @@
     "format:check": "eslint --cache src"
   },
   "dependencies": {
-    "exio": "^0.4.5"
+    "exio": "^0.5.6"
   }
 }
