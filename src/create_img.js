@@ -35,7 +35,7 @@ export const photos = [
     alt: 'Hollow Passage',
     src: './photos/IMG_1807.webp',
     original_path: '',
-    tags: ['Structure', 'Europe','B&W'],
+    tags: ['Structure', 'Europe', 'B&W'],
     time: [2022, '', ''],
     hv: true,
   },
@@ -71,14 +71,7 @@ export const photos = [
     time: [2022, '', ''],
     hv: true,
   },
-  {
-    alt: 'White Flower',
-    src: './photos/DSC00683.webp',
-    original_path: '',
-    tags: ['B&W', 'Berkeley'],
-    time: [2022, '', ''],
-    hv: true,
-  },
+
   {
     alt: 'Man Playing Guitar',
     src: './photos/IMG_1751.webp',
@@ -87,9 +80,25 @@ export const photos = [
     time: [2022, '', ''],
     hv: false,
   },
-  
-
+  {
+    alt: 'Clock Tower',
+    src: './photos/DSC00689.webp',
+    original_path: '',
+    tags: ['Berkeley'],
+    time: [2022, 'September', ''],
+    hv: true,
+  },
 ];
 
-
-export var all_tags = ["Animal", "Landscape", "Europe", "Street", "Structure", "San Francisco","Berkeley", "B&W", "All"];
+export let all_tags = [
+  'Animal',
+  'Landscape',
+  'Europe',
+  'Street',
+  'Structure',
+  'San Francisco',
+  'Berkeley',
+  'B&W',
+  'All',
+];
+export let collapse_tags = {"location": ['San Francisco', 'Europe', 'Berkeley']};

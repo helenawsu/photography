@@ -1047,10 +1047,10 @@ execa@^4.0.3:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
-exio@^0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/exio/-/exio-0.4.5.tgz#7f060a37b2c9454d85cf92545f159814d47ea0ef"
-  integrity sha512-+BpOFyyjQo/v3u3YUnEg4T/sPsFafs/8Ga3DRKHzWSznscJXQytko8obqmn6PNoUsKHG1OdH5Fu6JJWXop9oPw==
+exio@^0.5.11:
+  version "0.5.11"
+  resolved "https://registry.yarnpkg.com/exio/-/exio-0.5.11.tgz#b714ef38358706821a8994b406d6b631195170a7"
+  integrity sha512-hUPxRygtDF/ObYBk609z3RDUR3OQHha0yitLOO2f7myWRpHxGLSRfT62wDo9qAjwxeE+Pp41KtJcXEgAtZT8KA==
   dependencies:
     dialog-polyfill "^0.5.6"
 
