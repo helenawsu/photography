@@ -1,7 +1,6 @@
 <script>
   import { exioCheckbox } from 'exio/svelte';
-  import { get } from 'svelte/store';
-  import { photos, all_tags, collapse_tags } from './create_img.js';
+  import { photos, other_collapsible_tags, misc_tags } from './create_img.js';
 
   var show_start_message = true;
   var no_img_found = false;
@@ -13,10 +12,29 @@
    * @type {any[]}
    */
   var filtered_img = [];
+  var collapsible_tags = other_collapsible_tags;
 
-  let col_exp = true;
-  function collapse() {
-    col_exp  = !col_exp;
+  /**
+   * @param {number} num
+   */
+  function collapse(num) {
+    let original = collapsible_tags;
+    console.log(
+      'before changing collapsed is',
+      collapsible_tags[num].collapsed
+    );
+    let bo = collapsible_tags[num].collapsed;
+    collapsible_tags = [
+      ...collapsible_tags.slice(0, num),
+      {
+        name: collapsible_tags[num].name,
+        collapsed: !bo,
+        tags: collapsible_tags[num].tags,
+      },
+      ...collapsible_tags.slice(num + 1, collapsible_tags.length),
+    ];
+    console.log('after changing collapsed is', collapsible_tags[num].collapsed);
+    console.log('are two arrays equal', original == collapsible_tags);
   }
   /**
    * @param {string | any[]} filtered_tags
@@ -59,76 +77,76 @@
 </script>
 
 <main style="margin: 0px, padding: 0px">
-  <p class="lastupdatetime">This page was last updated on Sep 18, 2022.</p>
+  <p class="lastupdatetime">This page was last updated on Sep 22, 2022.</p>
   <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
+  <div class="flex-container" style="position: relative; top: 0px;">
+    {#each misc_tags as misc_tag}
+    <div class="flex-items">
+      <label>
+        {misc_tag}
+        <input
+          class="checkbox-format"
+          type="checkbox"
+          use:exioCheckbox
+          bind:group={filtered_tags}
+          name="filtered tags"
+          value={misc_tag}
+        />
+      </label>
+    </div>
+    {/each}
+  </div>
 
   <div class="flex-container">
-    {#each Object.entries(collapse_tags) as [key, value]}
-      {#if col_exp}
-      <div class="flex-items">
-        <label>
-          <p>{key}</p>
-          {value[0]}
-
-          <input
-            class="checkbox-format"
-            type="checkbox"
-            use:exioCheckbox
-            bind:group={filtered_tags}
-            name="filtered tags"
-            value={value[0]}
-          />
-        </label>
+    {#each collapsible_tags as tag_group, num}
+      {#if tag_group.collapsed}
+      <h4>{tag_group.name}</h4>
+        <div class="flex-items">
+          {#each tag_group.tags.slice(0, 2) as a_tag, index}
+            <label>
+              {tag_group.tags[index]}
+              <input
+                class="checkbox-format"
+                type="checkbox"
+                use:exioCheckbox
+                bind:group={filtered_tags}
+                name="filtered tags"
+                value={tag_group.tags[index]}
+              />
+            </label>
+          {/each}
+        </div>
+        <div>
+        <button on:click={() => collapse(num)}>More</button>
       </div>
-      <button on:click={collapse}>More</button>
-
       {:else}
-      <p>{key}</p>
+        <h4>{tag_group.name}</h4>
+        <div class="flex-items">
+          {#each tag_group.tags as a_tag}
+            <label>
+              {a_tag}
 
-      <div class="flex-items">
-        {#each value as single_tag}
-        <label>
-          {single_tag}
-
-          <input
-            class="checkbox-format"
-            type="checkbox"
-            use:exioCheckbox
-            bind:group={filtered_tags}
-            name="filtered tags"
-            value={single_tag}
-          />
-        </label>
-        {/each}
+              <input
+                class="checkbox-format"
+                type="checkbox"
+                use:exioCheckbox
+                bind:group={filtered_tags}
+                name="filtered tags"
+                value={a_tag}
+              />
+            </label>
+          {/each}
+        </div>
+        <div>
+        <button on:click={() => collapse(num)}>Less</button>
       </div>
-      <button on:click={collapse}>Less</button>
-
       {/if}
-
-    {/each}
-
-  </div>
-
-  <div class="flex-container">
-    {#each all_tags as a_tag}
-      <div class="flex-items">
-        <label>
-          {a_tag}
-
-          <input
-            class="checkbox-format"
-            type="checkbox"
-            use:exioCheckbox
-            bind:group={filtered_tags}
-            name="filtered tags"
-            value={a_tag}
-          />
-        </label>
-      </div>
     {/each}
   </div>
+
+  
 
   {#if show_start_message}
     <p>please select as least one tag.</p>
@@ -204,30 +222,30 @@
   /* h3{
     font-family: 'Aboreto', cursive;
     font-size: 1.5rem;
-  }
-  h4{
-    font-family: 'Fraunces', serif;
-    font-size: 1.5rem;
   } */
+  h4{
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 1.5rem;
+    color: white;
+    padding-left: 10px;
+  } 
   p {
     font-family: 'Piazzolla', serif;
     color: #d9dbca;
     font-size: 1.25rem;
     margin: 10px;
   }
+  button {
+    display: inline-block;
+
+  }
   .checkbox-format {
     display: inline-flex;
     border-color: #919cbf;
-
-
   }
   .checkbox-format:hover {
     --exio-hover-border-color: white;
-
-
   }
-
-
 
   @media screen and (max-width: 600px) {
   }
@@ -272,7 +290,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
 
   .flex-items {

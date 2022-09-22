@@ -90,15 +90,23 @@ export const photos = [
   },
 ];
 
-export let all_tags = [
-  'Animal',
-  'Landscape',
-  'Europe',
-  'Street',
-  'Structure',
-  'San Francisco',
-  'Berkeley',
-  'B&W',
+export let misc_tags = [
   'All',
 ];
-export let collapse_tags = {"location": ['San Francisco', 'Europe', 'Berkeley']};
+export let other_collapsible_tags = [
+  {
+    name: 'Location',
+    collapsed: true,
+    tags: ['San Francisco', 'Europe', 'Berkeley'],
+  },
+  {
+    name: 'Form',
+    collapsed: true,
+    tags: ['Street', 'Landscape', 'Protraits', 'Structure'],
+  },
+  {
+    name: 'Color',
+    collapsed: true,
+    tags: ['B&W'],
+  },
+];
