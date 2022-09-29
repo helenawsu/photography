@@ -90,9 +90,7 @@ export const photos = [
   },
 ];
 
-export let misc_tags = [
-  'All',
-];
+export let misc_tags = ['All'];
 export let other_collapsible_tags = [
   {
     name: 'Location',
