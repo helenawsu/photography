@@ -20,15 +20,27 @@
    */
   let filtered_img = [];
   let show_full_img = false;
-  let full_screen_path = "";
 
   /**
-   * @param {string} img_path
+   * @type {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }}
    */
-  function enterFullScreen(img_path) {
+  let focused_img ={
+    alt: '',
+    src: '',
+    original_path: '',
+    tags: [''],
+    time: [''],
+    hv: true,
+  };
+
+  /**
+   * @param {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }} img_param
+   */
+  function enterFullScreen(img_param) {
     show_full_img = true;
-    full_screen_path = img_path.slice(0,-4)+"jpg";
-    console.log(full_screen_path)
+    focused_img = img_param;
+    focused_img.original_path = img_param.src.slice(0,-4)+"jpg";
+    console.log(focused_img)
   }
 
   function exitFullScreen() {
@@ -37,12 +49,23 @@
 </script>
 {#if show_full_img}
 <button  on:click={exitFullScreen}>exit</button>
-<img class="fullscreen" src={full_screen_path} alt="something">
+<h4  style="display: inline-block" class="fullscreenimg">{focused_img.alt}</h4>
+
+<div class="fullscreen">
+
+{#if focused_img.hv}
+<img  class="fullscreenimg_big" src={focused_img.original_path} alt={focused_img.alt}>
+<img  class="fullscreenimg_small stretch_h" src={focused_img.src} alt={focused_img.alt}>
+{:else}
+<img  class="fullscreenimg_big" src={focused_img.original_path} alt={focused_img.alt}>
+<img  class="fullscreenimg_small stretch_v" src={focused_img.src} alt={focused_img.alt}>
+{/if}
+</div>
 {:else}
 
 
 <main style="margin: 0px, padding: 0px">
-  <p class="lastupdatetime">This page was last updated on Sep 29, 2022.</p>
+  <p class="lastupdatetime">This page was last updated on Oct 1, 2022.</p>
   <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
@@ -67,10 +90,10 @@
       <!-- svelte-ignore a11y-missing-attribute -->
       <div class="flex-items">
         {#if a_photo.hv}
-          <img {...a_photo} style="width:600px" on:click={() => enterFullScreen(a_photo.src)}/>
+          <img {...a_photo} style="width:600px" on:click={() => enterFullScreen(a_photo)}/>
         {:else}
-          <img {...a_photo} style="height:500px" on:click={() => enterFullScreen(a_photo.src)} />
-        {/if}
+          <img {...a_photo} style="height:500px" on:click={() => enterFullScreen(a_photo)} />
+        {/if}å
       </div>
     {/each}
   </div>
@@ -125,7 +148,13 @@
       text-align: center;
     }
   }
-
+  h4 {
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 1.5rem;
+    color: white;
+    padding-left: 10px;
+    vertical-align: middle;
+  }
   p {
     font-family: 'Piazzolla', serif;
     color: #d9dbca;
@@ -143,10 +172,33 @@
 
   @media screen and (max-width: 600px) {
   }
-
+  .stretch_h {
+    height: 90%;
+  }
+  .stretch_v {
+    height: 90%;
+  }
   .fullscreen{
+    display: grid;
+    align-content: center;
+    position: relative;
+    bottom: 45px;
+
+  }
+  .fullscreen >.fullscreenimg_big{
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    z-index: -1;
     max-width: 80%;
-    max-height: 100%;
+    max-height: 90%;
+
+  }
+  .fullscreen >.fullscreenimg_small{
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    z-index: -2;
+    max-width: 80%;
+    max-height: 90%;
 
   }
 
