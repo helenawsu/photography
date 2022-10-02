@@ -1,6 +1,6 @@
 <script>
   import { exioCheckbox } from 'exio/svelte';
-  import { photos, other_collapsible_tags } from './create_img.js';
+  import { photos, other_collapsible_tags, misc_tags } from './create_img.js';
 
   /**
    * @type {string[]}
@@ -17,8 +17,6 @@
    * @param {number} num
    */
   function collapse(num) {
-    let original = collapsible_tags;
-
     let bo = collapsible_tags[num].collapsed;
     collapsible_tags = [
       ...collapsible_tags.slice(0, num),
@@ -79,6 +77,24 @@
   $: filtered_img = refresh(filtered_tags);
 </script>
 
+<div class="flex-container" style="position: relative; top: 0px;">
+  {#each misc_tags as misc_tag}
+    <div class="flex-items">
+      <label>
+        {misc_tag}
+        <input
+          class="checkbox-format"
+          type="checkbox"
+          use:exioCheckbox
+          bind:group={filtered_tags}
+          name="filtered tags"
+          value={misc_tag}
+        />
+      </label>
+    </div>
+  {/each}
+</div>
+
 <div class="flex-container">
   {#each collapsible_tags as tag_group, num}
     {#if tag_group.collapsed}
@@ -91,7 +107,6 @@
               class="checkbox-format"
               type="checkbox"
               use:exioCheckbox
-              
               bind:group={filtered_tags}
               name="filtered tags"
               value={tag_group.tags[index]}
@@ -133,6 +148,7 @@
     font-size: 1.5rem;
     color: white;
     padding-left: 10px;
+    vertical-align: middle;
   }
   .checkbox-format {
     display: inline-flex;

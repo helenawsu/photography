@@ -1,7 +1,8 @@
 <script>
   import { exioCheckbox } from 'exio/svelte';
-  import { misc_tags } from './create_img.js';
   import ShowingTags from './ShowingTags.svelte';
+  import FullScreenImage from './FullScreenImage.svelte';
+
   /**
    * @type {boolean}
    */
@@ -18,31 +19,34 @@
    * @type {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }[]}
    */
   let filtered_img = [];
-  // let collapsible_tags = other_collapsible_tags;
+  let show_full_img = false;
+  let full_screen_path = "";
+
+  /**
+   * @param {string} img_path
+   */
+  function enterFullScreen(img_path) {
+    show_full_img = true;
+    full_screen_path = img_path.slice(0,-4)+"jpg";
+    console.log(full_screen_path)
+  }
+
+  function exitFullScreen() {
+    show_full_img = false;
+  }
 </script>
+{#if show_full_img}
+<button  on:click={exitFullScreen}>exit</button>
+<img class="fullscreen" src={full_screen_path} alt="something">
+{:else}
+
 
 <main style="margin: 0px, padding: 0px">
   <p class="lastupdatetime">This page was last updated on Sep 29, 2022.</p>
   <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
   <br />
-  <div class="flex-container" style="position: relative; top: 0px;">
-    {#each misc_tags as misc_tag}
-      <div class="flex-items">
-        <label>
-          {misc_tag}
-          <input
-            class="checkbox-format"
-            type="checkbox"
-            use:exioCheckbox
-            bind:group={filtered_tags}
-            name="filtered tags"
-            value={misc_tag}
-          />
-        </label>
-      </div>
-    {/each}
-  </div>
+  
   <ShowingTags
     bind:filtered_img
     bind:filtered_tags
@@ -63,15 +67,15 @@
       <!-- svelte-ignore a11y-missing-attribute -->
       <div class="flex-items">
         {#if a_photo.hv}
-          <img {...a_photo} style="width:600px" />
+          <img {...a_photo} style="width:600px" on:click={() => enterFullScreen(a_photo.src)}/>
         {:else}
-          <img {...a_photo} style="height:500px" />
+          <img {...a_photo} style="height:500px" on:click={() => enterFullScreen(a_photo.src)} />
         {/if}
       </div>
     {/each}
   </div>
 </main>
-
+{/if}
 <style>
   main {
     /* text-align: center; */
@@ -140,6 +144,12 @@
   @media screen and (max-width: 600px) {
   }
 
+  .fullscreen{
+    max-width: 80%;
+    max-height: 100%;
+
+  }
+
   img {
     display: block;
     margin-left: auto;
@@ -153,28 +163,7 @@
       object-fit: contain;
     }
   }
-
-  label {
-    font-family: 'Texturina', serif;
-    font-size: 1.5rem;
-    /* background-image: linear-gradient(to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
-    margin-left: 0px;
-    padding-right: 0px;
-    padding-left: 15px;
-
-    display: block;
-    color: #d9dbca;
-    /* border-right: solid #919cbf 0.5px; */
-
-    /* border-bottom: solid #919cbf 0.5px; */
-
-    border-left: solid #ffff00 0.5px;
-  }
-  @media screen and (max-width: 600px) {
-    label {
-      font-size: 1.25rem;
-    }
-  }
+  
 
   .flex-container {
     display: flex;
