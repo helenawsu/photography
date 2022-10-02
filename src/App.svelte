@@ -54,11 +54,11 @@
 <div class="fullscreen">
 
 {#if focused_img.hv}
-<img  class="fullscreenimg_big" src={focused_img.original_path} alt={focused_img.alt}>
-<img  class="fullscreenimg_small stretch_h" src={focused_img.src} alt={focused_img.alt}>
+<img  class="fullscreenimg_big_h" src={focused_img.original_path} alt={focused_img.alt}>
+<img  class="fullscreenimg_small_h stretch_h" src={focused_img.src} alt={focused_img.alt}>
 {:else}
-<img  class="fullscreenimg_big" src={focused_img.original_path} alt={focused_img.alt}>
-<img  class="fullscreenimg_small stretch_v" src={focused_img.src} alt={focused_img.alt}>
+<img  class="fullscreenimg_big_v" src={focused_img.original_path} alt={focused_img.alt}>
+<img  class="fullscreenimg_small_v stretch_v" src={focused_img.src} alt={focused_img.alt}>
 {/if}
 </div>
 {:else}
@@ -90,10 +90,10 @@
       <!-- svelte-ignore a11y-missing-attribute -->
       <div class="flex-items">
         {#if a_photo.hv}
-          <img {...a_photo} style="width:600px" on:click={() => enterFullScreen(a_photo)}/>
+          <img class ="img_hover" {...a_photo} style="width:600px" on:click={() => enterFullScreen(a_photo)}/>
         {:else}
-          <img {...a_photo} style="height:500px" on:click={() => enterFullScreen(a_photo)} />
-        {/if}å
+          <img class ="img_hover" {...a_photo} style="height:500px" on:click={() => enterFullScreen(a_photo)} />
+        {/if}
       </div>
     {/each}
   </div>
@@ -173,10 +173,11 @@
   @media screen and (max-width: 600px) {
   }
   .stretch_h {
-    height: 90%;
+    width: 80vw;
+
   }
   .stretch_v {
-    height: 90%;
+    height: 90vh;
   }
   .fullscreen{
     display: grid;
@@ -185,25 +186,35 @@
     bottom: 45px;
 
   }
-  .fullscreen >.fullscreenimg_big{
+  .fullscreen >.fullscreenimg_big_h{
     grid-column: 1/-1;
     grid-row: 1/-1;
     z-index: -1;
-    max-width: 80%;
-    max-height: 90%;
-
+    max-width: 80vw;
   }
-  .fullscreen >.fullscreenimg_small{
+  .fullscreen >.fullscreenimg_big_v{
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    z-index: -1;
+    max-height: 90vh;
+  }
+  .fullscreen >.fullscreenimg_small_h{
     grid-column: 1/-1;
     grid-row: 1/-1;
     z-index: -2;
-    max-width: 80%;
-    max-height: 90%;
-
+  }
+  .fullscreen >.fullscreenimg_small_v{
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    z-index: -2;
+  }
+  .img_hover:hover{
+    border: white solid 1px;
   }
 
   img {
     display: block;
+
     margin-left: auto;
     margin-right: auto;
   }

@@ -100,7 +100,7 @@ export let other_collapsible_tags = [
   {
     name: 'Form',
     collapsed: true,
-    tags: ['Street', 'Landscape', 'Protraits', 'Structure'],
+    tags: ['Street', 'Landscape', 'Animal', 'Protrait', 'Structure'],
   },
   {
     name: 'Color',
