@@ -1,7 +1,14 @@
 <script>
-  import { exioCheckbox } from 'exio/svelte';
   import ShowingTags from './ShowingTags.svelte';
-  import FullScreenImage from './FullScreenImage.svelte';
+  import { afterUpdate } from 'svelte';
+  /**
+   * @type {number}
+   */
+  let y;
+  /**
+   * @type {number}
+   */
+  let current_scroll_position = 0;
 
   /**
    * @type {boolean}
@@ -20,11 +27,12 @@
    */
   let filtered_img = [];
   let show_full_img = false;
+  let scroll = false;
 
   /**
    * @type {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }}
    */
-  let focused_img ={
+  let focused_img = {
     alt: '',
     src: '',
     original_path: '',
@@ -39,66 +47,108 @@
   function enterFullScreen(img_param) {
     show_full_img = true;
     focused_img = img_param;
-    focused_img.original_path = img_param.src.slice(0,-4)+"jpg";
-    console.log(focused_img)
+    focused_img.original_path = img_param.src.slice(0, -4) + 'jpg';
+    current_scroll_position = y;
   }
 
   function exitFullScreen() {
     show_full_img = false;
+    scroll = true;
   }
+  $: scroll &&
+    afterUpdate(() => {
+      console.log('is scrolling true', scroll);
+
+      if (scroll) window.scrollTo(0, current_scroll_position);
+      console.log('scrolling', current_scroll_position);
+
+      scroll = false;
+      console.log('is scrolling true', scroll);
+    });
 </script>
-{#if show_full_img}
-<button  on:click={exitFullScreen}>exit</button>
-<h4  style="display: inline-block" class="fullscreenimg">{focused_img.alt}</h4>
 
-<div class="fullscreen">
-
-{#if focused_img.hv}
-<img  class="fullscreenimg_big_h" src={focused_img.original_path} alt={focused_img.alt}>
-<img  class="fullscreenimg_small_h stretch_h" src={focused_img.src} alt={focused_img.alt}>
-{:else}
-<img  class="fullscreenimg_big_v" src={focused_img.original_path} alt={focused_img.alt}>
-<img  class="fullscreenimg_small_v stretch_v" src={focused_img.src} alt={focused_img.alt}>
-{/if}
-</div>
-{:else}
-
+<svelte:window bind:scrollY={y} />
 
 <main style="margin: 0px, padding: 0px">
-  <p class="lastupdatetime">This page was last updated on Oct 1, 2022.</p>
-  <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
+  {#if show_full_img}
+    <button on:click={exitFullScreen}>exit</button>
+    <p style="display: inline-block" class="fullscreenimg">{focused_img.alt}</p>
+    <p>u just scrolled {current_scroll_position}</p>
 
-  <br />
-  
-  <ShowingTags
-    bind:filtered_img
-    bind:filtered_tags
-    bind:show_start_message
-    bind:no_img_found
-  />
+    <div class="fullscreen">
+      {#if focused_img.hv}
+        <img
+          class="fullscreenimg_big_h"
+          src={focused_img.original_path}
+          alt={focused_img.alt}
+        />
+        <img
+          class="fullscreenimg_small_h stretch_h"
+          src={focused_img.src}
+          alt={focused_img.alt}
+        />
+      {:else}
+        <img
+          class="fullscreenimg_big_v"
+          src={focused_img.original_path}
+          alt={focused_img.alt}
+        />
+        <img
+          class="fullscreenimg_small_v stretch_v"
+          src={focused_img.src}
+          alt={focused_img.alt}
+        />
+        <p>You have scrolled {y} pixels</p>
+      {/if}
+    </div>
+  {:else}
+    <p class="lastupdatetime">This page was last updated on Oct 7, 2022.</p>
+    <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
 
-  {#if show_start_message}
-    <p>please select as least one tag.</p>
+    <br />
+
+    <ShowingTags
+      bind:filtered_img
+      bind:filtered_tags
+      bind:show_start_message
+      bind:no_img_found
+    />
+    <p>You have scrolled {y} pixels</p>
+
+    {#if show_start_message}
+      <p>please select as least one tag.</p>
+    {/if}
+
+    {#if no_img_found}
+      <p>No photos are found!!!!</p>
+    {/if}
+
+    <div class="flex-container">
+      {#each filtered_img as a_photo}
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <div class="flex-items">
+          {#if a_photo.hv}
+            <img
+              class="img_hover"
+              {...a_photo}
+              style="width:600px"
+              on:click={() => enterFullScreen(a_photo)}
+            />
+          {:else}
+            <img
+              class="img_hover"
+              {...a_photo}
+              style="height:500px"
+              on:click={() => enterFullScreen(a_photo)}
+            />
+          {/if}
+        </div>
+      {/each}
+    </div>
+    <p>You have scrolled {y} pixels</p>
   {/if}
-
-  {#if no_img_found}
-    <p>No photos are found!!!!</p>
-  {/if}
-
-  <div class="flex-container">
-    {#each filtered_img as a_photo}
-      <!-- svelte-ignore a11y-missing-attribute -->
-      <div class="flex-items">
-        {#if a_photo.hv}
-          <img class ="img_hover" {...a_photo} style="width:600px" on:click={() => enterFullScreen(a_photo)}/>
-        {:else}
-          <img class ="img_hover" {...a_photo} style="height:500px" on:click={() => enterFullScreen(a_photo)} />
-        {/if}
-      </div>
-    {/each}
-  </div>
 </main>
-{/if}
+
 <style>
   main {
     /* text-align: center; */
@@ -155,6 +205,16 @@
     padding-left: 10px;
     vertical-align: middle;
   }
+  #scroller {
+    overflow: scroll;
+    height: 150px;
+    width: 150px;
+    border: 5px dashed orange;
+  }
+
+  #output {
+    padding: 1rem 0;
+  }
   p {
     font-family: 'Piazzolla', serif;
     color: #d9dbca;
@@ -173,42 +233,40 @@
   @media screen and (max-width: 600px) {
   }
   .stretch_h {
-    width: 80vw;
-
+    width: 70vw;
   }
   .stretch_v {
-    height: 90vh;
+    height: 70vh;
   }
-  .fullscreen{
+  .fullscreen {
     display: grid;
     align-content: center;
     position: relative;
     bottom: 45px;
-
   }
-  .fullscreen >.fullscreenimg_big_h{
+  .fullscreen > .fullscreenimg_big_h {
     grid-column: 1/-1;
     grid-row: 1/-1;
     z-index: -1;
-    max-width: 80vw;
+    max-width: 70vw;
   }
-  .fullscreen >.fullscreenimg_big_v{
+  .fullscreen > .fullscreenimg_big_v {
     grid-column: 1/-1;
     grid-row: 1/-1;
     z-index: -1;
-    max-height: 90vh;
+    max-height: 70vh;
   }
-  .fullscreen >.fullscreenimg_small_h{
+  .fullscreen > .fullscreenimg_small_h {
     grid-column: 1/-1;
     grid-row: 1/-1;
     z-index: -2;
   }
-  .fullscreen >.fullscreenimg_small_v{
+  .fullscreen > .fullscreenimg_small_v {
     grid-column: 1/-1;
     grid-row: 1/-1;
     z-index: -2;
   }
-  .img_hover:hover{
+  .img_hover:hover {
     border: white solid 1px;
   }
 
@@ -226,7 +284,6 @@
       object-fit: contain;
     }
   }
-  
 
   .flex-container {
     display: flex;

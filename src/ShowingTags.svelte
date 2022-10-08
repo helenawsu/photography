@@ -64,7 +64,6 @@
       no_img_found = false;
     }
 
-    console.log(filtered_img);
     return filtered_img;
   }
 
