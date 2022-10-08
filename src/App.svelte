@@ -56,15 +56,14 @@
     scroll = true;
   }
   $: scroll &&
-    afterUpdate(() => {
-      console.log('is scrolling true', scroll);
+  setTimeout(() => {
+      console.log('is it scrolling ', scroll);
 
-      if (scroll) window.scrollTo(0, current_scroll_position);
-      console.log('scrolling', current_scroll_position);
+      if (scroll) {window.scrollTo(0, current_scroll_position);
+      console.log('scrolling', current_scroll_position);}
 
       scroll = false;
-      console.log('is scrolling true', scroll);
-    });
+    },3);
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -267,7 +266,7 @@
     z-index: -2;
   }
   .img_hover:hover {
-    border: white solid 1px;
+    /* border: white solid 1px; */
   }
 
   img {
