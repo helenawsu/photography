@@ -97,7 +97,9 @@
 <div class="flex-container">
   {#each collapsible_tags as tag_group, num}
     {#if tag_group.collapsed}
-      <h4>{tag_group.name}</h4>
+      <button class="test" on:click={() => collapse(num)}>
+        <span>{tag_group.name}</span></button>
+
       <div class="flex-items">
         {#each tag_group.tags.slice(0, 2) as a_tag, index}
           <label>
@@ -114,10 +116,10 @@
         {/each}
       </div>
       <div>
-        <button on:click={() => collapse(num)}>More</button>
+        
       </div>
     {:else}
-      <h4>{tag_group.name}</h4>
+    <button class="test" on:click={() => collapse(num)}><span>{tag_group.name}</span></button>
       <div class="flex-items">
         {#each tag_group.tags as a_tag}
           <label>
@@ -135,7 +137,6 @@
         {/each}
       </div>
       <div>
-        <button on:click={() => collapse(num)}>Less</button>
       </div>
     {/if}
   {/each}
@@ -145,10 +146,45 @@
   h4 {
     font-family: 'Inknut Antiqua', serif;
     font-size: 1.5rem;
-    color: white;
+    color: #d9dbca;
     padding-left: 10px;
-    vertical-align: middle;
+    vertical-align:super;
+    margin: 0;
+    padding: 0;
+    
   }
+  input {
+    vertical-align:middle;
+    position: relative;
+    top:3px;
+    margin-right: 20px;
+  }
+  button {
+    background-color: #0f0f19;
+    font-family: 'Inknut Antiqua', serif;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    border-top: none;
+
+    padding-top:0px;
+    margin-right:10px;
+    margin-top:10px;
+
+  }
+  button:hover{
+    background-color: #464d4f;
+  }
+  .labelgroup {
+    background-color: #919cbf;
+  }
+  .test > span {
+    display: block;
+    height: 100%;
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 1.5rem;
+    color: #d9dbca;
+}
   .checkbox-format {
     display: inline-flex;
     border-color: #919cbf;
@@ -169,7 +205,7 @@
     padding-left: 15px;
     display: block;
     color: #d9dbca;
-    border-left: solid #ffff00 0.5px;
+    border-left: solid wheat 0.5px;
   }
   @media screen and (max-width: 600px) {
     label {

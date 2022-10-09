@@ -45,6 +45,8 @@
    * @param {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }} img_param
    */
   function enterFullScreen(img_param) {
+    console.log("entering")
+
     show_full_img = true;
     focused_img = img_param;
     focused_img.original_path = img_param.src.slice(0, -4) + 'jpg';
@@ -54,6 +56,7 @@
   function exitFullScreen() {
     show_full_img = false;
     scroll = true;
+    console.log("exiting")
   }
   $: scroll &&
   setTimeout(() => {
@@ -64,6 +67,14 @@
 
       scroll = false;
     },3);
+//   $: show_full_img &&
+// setTimeout(() => {
+//     console.log('is it scrolling to top',show_full_img);
+
+//     if (show_full_img) {window.scrollTo(0, 0);
+//     console.log('scrolling', 0);}
+
+//   },3);
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -72,7 +83,6 @@
   {#if show_full_img}
     <button on:click={exitFullScreen}>exit</button>
     <p style="display: inline-block" class="fullscreenimg">{focused_img.alt}</p>
-    <p>u just scrolled {current_scroll_position}</p>
 
     <div class="fullscreen">
       {#if focused_img.hv}
@@ -97,12 +107,11 @@
           src={focused_img.src}
           alt={focused_img.alt}
         />
-        <p>You have scrolled {y} pixels</p>
       {/if}
     </div>
   {:else}
-    <p class="lastupdatetime">This page was last updated on Oct 7, 2022.</p>
-    <h2 style="padding-bottom: 10px">HELENA SU PHOTOGRAPHY</h2>
+    <p class="lastupdatetime">This page was last updated on Oct 8, 2022.</p>
+    <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
 
@@ -112,7 +121,6 @@
       bind:show_start_message
       bind:no_img_found
     />
-    <p>You have scrolled {y} pixels</p>
 
     {#if show_start_message}
       <p>please select as least one tag.</p>
@@ -144,7 +152,6 @@
         </div>
       {/each}
     </div>
-    <p>You have scrolled {y} pixels</p>
   {/if}
 </main>
 
@@ -172,15 +179,25 @@
     }
   }
 
-  /* h1 {
-    color: #ff3e00;
-    font-family: 'Bodoni Moda', serif;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  } */
+  h1 {
+    font-family: 'Caudex', serif;
+
+    letter-spacing: 3px;
+    font-size: 3rem;
+    margin: 0px;
+    margin-left: 10px;
+    text-align: left;
+    color: #d9dbca;
+    font-stretch: condensed;
+  }
+  @media screen and (max-width: 600px) {
+    h1 {
+      font-size: 2.25rem;
+      text-align: center;
+    }
+  }
   h2 {
-    font-family: 'Tapestry', cursive;
+    font-family: 'Caudex', serif;
 
     letter-spacing: 3px;
     font-size: 4rem;
@@ -204,16 +221,7 @@
     padding-left: 10px;
     vertical-align: middle;
   }
-  #scroller {
-    overflow: scroll;
-    height: 150px;
-    width: 150px;
-    border: 5px dashed orange;
-  }
-
-  #output {
-    padding: 1rem 0;
-  }
+  
   p {
     font-family: 'Piazzolla', serif;
     color: #d9dbca;
@@ -241,7 +249,6 @@
     display: grid;
     align-content: center;
     position: relative;
-    bottom: 45px;
   }
   .fullscreen > .fullscreenimg_big_h {
     grid-column: 1/-1;
@@ -266,7 +273,7 @@
     z-index: -2;
   }
   .img_hover:hover {
-    /* border: white solid 1px; */
+    opacity: 0.5;
   }
 
   img {
