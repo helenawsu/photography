@@ -95,7 +95,7 @@ export let other_collapsible_tags = [
   {
     name: 'Location',
     collapsed: true,
-    tags: ['San Francisco', 'Europe', 'Berkeley'],
+    tags: ['Europe', 'San Francisco',  'Berkeley'],
   },
   {
     name: 'Form',

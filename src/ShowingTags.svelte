@@ -80,7 +80,7 @@
   {#each misc_tags as misc_tag}
     <div class="flex-items">
       <label>
-        {misc_tag}
+        <span>{misc_tag}</span>
         <input
           class="checkbox-format"
           type="checkbox"
@@ -97,13 +97,15 @@
 <div class="flex-container">
   {#each collapsible_tags as tag_group, num}
     {#if tag_group.collapsed}
-      <button class="test" on:click={() => collapse(num)}>
-        <span>{tag_group.name}</span></button>
+      <button class="" on:click={() => collapse(num)}>
+        <h4>{tag_group.name}</h4></button>
 
       <div class="flex-items">
         {#each tag_group.tags.slice(0, 2) as a_tag, index}
           <label>
+            <span>
             {tag_group.tags[index]}
+          </span>
             <input
               class="checkbox-format"
               type="checkbox"
@@ -119,12 +121,13 @@
         
       </div>
     {:else}
-    <button class="test" on:click={() => collapse(num)}><span>{tag_group.name}</span></button>
+    <button class="" on:click={() => collapse(num)}><h4>{tag_group.name}</h4></button>
       <div class="flex-items">
         {#each tag_group.tags as a_tag}
           <label>
+            <span>
             {a_tag}
-
+          </span>
             <input
               class="checkbox-format"
               type="checkbox"
@@ -148,15 +151,18 @@
     font-size: 1.5rem;
     color: #d9dbca;
     padding-left: 10px;
-    vertical-align:super;
     margin: 0;
     padding: 0;
+    display: block;
+    height: 100%;
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 1.5rem;
+    color: #d9dbca;
     
   }
   input {
     vertical-align:middle;
     position: relative;
-    top:3px;
     margin-right: 20px;
   }
   button {
@@ -178,16 +184,23 @@
   .labelgroup {
     background-color: #919cbf;
   }
+  span {
+    top: 3px;
+    transform: translateY(42px);
+    vertical-align:top;
+    position: relative;
+  }
   .test > span {
     display: block;
     height: 100%;
     font-family: 'Inknut Antiqua', serif;
     font-size: 1.5rem;
     color: #d9dbca;
-}
+  }
   .checkbox-format {
     display: inline-flex;
     border-color: #919cbf;
+    vertical-align: -webkit-baseline-middle;
   }
   .checkbox-format:hover {
     --exio-hover-border-color: white;

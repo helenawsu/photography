@@ -81,10 +81,12 @@
 
 <main style="margin: 0px, padding: 0px">
   {#if show_full_img}
-    <button on:click={exitFullScreen}>exit</button>
-    <p style="display: inline-block" class="fullscreenimg">{focused_img.alt}</p>
+    
 
     <div class="fullscreen">
+      <h4 style=" grid-column: 3; grid-row: 1;" class="fullscreenimg description">{focused_img.alt}</h4>
+
+      <button on:click={exitFullScreen}>EXIT</button>
       {#if focused_img.hv}
         <img
           class="fullscreenimg_big_h"
@@ -110,7 +112,7 @@
       {/if}
     </div>
   {:else}
-    <p class="lastupdatetime">This page was last updated on Oct 8, 2022.</p>
+    <p class="lastupdatetime">This page was last updated on Oct 9, 2022.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
@@ -228,7 +230,34 @@
     font-size: 1.25rem;
     margin: 10px;
   }
+  button {
+    background-color: #0f0f19;
+    border:none;
+    display: inline-flex;
+    grid-column: 1;
+    grid-row: 1;
+    height:95vh;
+    float: right;
+    align-items: center; 
+    justify-content: center; /* center the content horizontally */
+    color:#d9dbca;
+    font-size: 1.25rem;
+    font-family: 'Piazzolla', serif;
+    margin-right: 20px;
+    
+  }
+  button:hover{
+    background-color: #464d4f;
+  }
+  .description {
+    text-align: center;
+    vertical-align: middle;
+    align-self: center;
+    padding-left: 20px;
+    padding-right: 20px;
 
+    
+  }
   .checkbox-format {
     display: inline-flex;
     border-color: #919cbf;
@@ -243,7 +272,7 @@
     width: 70vw;
   }
   .stretch_v {
-    height: 70vh;
+    height: 90vh;
   }
   .fullscreen {
     display: grid;
@@ -251,26 +280,30 @@
     position: relative;
   }
   .fullscreen > .fullscreenimg_big_h {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
+    grid-column: 2;
+    grid-row: 1;
     z-index: -1;
     max-width: 70vw;
+    align-self: center; 
   }
   .fullscreen > .fullscreenimg_big_v {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
+    grid-column: 2;
+    grid-row: 1;
     z-index: -1;
-    max-height: 70vh;
+    max-height: 90vh;
+    align-self: center; 
   }
   .fullscreen > .fullscreenimg_small_h {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
+    grid-column: 2;
+    grid-row: 1;
     z-index: -2;
+    align-self: center; 
   }
   .fullscreen > .fullscreenimg_small_v {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
+    grid-column: 2;
+    grid-row: 1;
     z-index: -2;
+    align-self: center; 
   }
   .img_hover:hover {
     opacity: 0.5;
