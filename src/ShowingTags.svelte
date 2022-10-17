@@ -8,7 +8,6 @@
   export let filtered_tags = [];
 
   let collapsible_tags = other_collapsible_tags;
-  export let show_start_message = true;
   export let no_img_found = false;
 
   export let filtered_img = [];
@@ -30,39 +29,32 @@
   }
 
   /**
-   * @returns { { alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }[]}
+   * @returns { { alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}
    * @param {string[]} filtered_tags_param
    */
   function refresh(filtered_tags_param) {
     filtered_img = [];
     if (filtered_tags_param.includes('All')) {
       filtered_img = photos;
-      return filtered_img;
     }
-    for (var m = 0; m < photos.length; m++) {
-      var add;
-      if (filtered_tags_param.length > 0) {
-        add = true;
-        show_start_message = false;
-      } else {
-        show_start_message = true;
-        add = false;
-      }
-
-      for (var n = 0; n < filtered_tags_param.length; n++) {
-        if (!photos[m].tags.includes(filtered_tags_param[n])) {
-          add = false;
-        }
-      }
-      if (add) {
-        filtered_img.push(photos[m]);
-      }
-    }
-    if (filtered_img.length == 0 && !show_start_message) {
-      no_img_found = true;
+    if (filtered_tags_param.length === 0) {
+      filtered_img = [
+        {
+          alt: '',
+          src: '',
+          original_path: '',
+          tags: [''],
+          time: [''],
+          hv: true,
+        },
+      ];
     } else {
-      no_img_found = false;
+      filtered_img = photos.filter((photo) =>
+        filtered_tags.every((tag) => photo.tags.includes(tag))
+      );
     }
+    no_img_found = filtered_img.length === 0 && filtered_tags_param.length > 0;
 
     return filtered_img;
   }
@@ -71,7 +63,8 @@
    * @param {string[]} filtered_tags
    */
   /**
-   * @type {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }[]}
+   * @type {{ alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}
    */
   $: filtered_img = refresh(filtered_tags);
 </script>
@@ -98,14 +91,15 @@
   {#each collapsible_tags as tag_group, num}
     {#if tag_group.collapsed}
       <button class="" on:click={() => collapse(num)}>
-        <h4>{tag_group.name}</h4></button>
+        <h4>{tag_group.name}</h4></button
+      >
 
       <div class="flex-items">
         {#each tag_group.tags.slice(0, 2) as a_tag, index}
           <label>
             <span>
-            {tag_group.tags[index]}
-          </span>
+              {tag_group.tags[index]}
+            </span>
             <input
               class="checkbox-format"
               type="checkbox"
@@ -117,17 +111,17 @@
           </label>
         {/each}
       </div>
-      <div>
-        
-      </div>
+      <div />
     {:else}
-    <button class="" on:click={() => collapse(num)}><h4>{tag_group.name}</h4></button>
+      <button class="" on:click={() => collapse(num)}
+        ><h4>{tag_group.name}</h4></button
+      >
       <div class="flex-items">
         {#each tag_group.tags as a_tag}
           <label>
             <span>
-            {a_tag}
-          </span>
+              {a_tag}
+            </span>
             <input
               class="checkbox-format"
               type="checkbox"
@@ -139,8 +133,7 @@
           </label>
         {/each}
       </div>
-      <div>
-      </div>
+      <div />
     {/if}
   {/each}
 </div>
@@ -158,10 +151,9 @@
     font-family: 'Inknut Antiqua', serif;
     font-size: 1.5rem;
     color: #d9dbca;
-    
   }
   input {
-    vertical-align:middle;
+    vertical-align: middle;
     position: relative;
     margin-right: 20px;
   }
@@ -173,30 +165,21 @@
     border-left: none;
     border-top: none;
 
-    padding-top:0px;
-    margin-right:10px;
-    margin-top:10px;
-
+    padding-top: 0px;
+    margin-right: 10px;
+    margin-top: 10px;
   }
-  button:hover{
+  button:hover {
     background-color: #464d4f;
   }
-  .labelgroup {
-    background-color: #919cbf;
-  }
+
   span {
     top: 3px;
     transform: translateY(42px);
-    vertical-align:top;
+    vertical-align: top;
     position: relative;
   }
-  .test > span {
-    display: block;
-    height: 100%;
-    font-family: 'Inknut Antiqua', serif;
-    font-size: 1.5rem;
-    color: #d9dbca;
-  }
+
   .checkbox-format {
     display: inline-flex;
     border-color: #919cbf;
@@ -212,7 +195,8 @@
   label {
     font-family: 'Texturina', serif;
     font-size: 1.5rem;
-    /* background-image: linear-gradient(to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
+    /* background-image: linear-gradient
+    (to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
     margin-left: 0px;
     padding-right: 0px;
     padding-left: 15px;

@@ -1,15 +1,21 @@
 <script>
   import ShowingTags from './ShowingTags.svelte';
-  import { afterUpdate } from 'svelte';
+  import FullScreenImage from './FullScreenImage.svelte';
+  import {
+    focused_img,
+    show_full_img,
+    current_scroll_position,
+  } from './store.js';
+  let c_scroll_position;
   /**
    * @type {number}
    */
   let y;
-  /**
-   * @type {number}
-   */
-  let current_scroll_position = 0;
 
+  /**
+   * @type {boolean}
+   */
+  let full_screen;
   /**
    * @type {boolean}
    */
@@ -23,106 +29,48 @@
    */
   let filtered_tags = [];
   /**
-   * @type {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }[]}
+   * @type {{ alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}
    */
   let filtered_img = [];
-  let show_full_img = false;
-  let scroll = false;
-
   /**
-   * @type {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }}
+   * @type {{ alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; }}
    */
-  let focused_img = {
-    alt: '',
-    src: '',
-    original_path: '',
-    tags: [''],
-    time: [''],
-    hv: true,
-  };
-
+  let fs_img;
+  show_full_img.subscribe((value) => {
+    full_screen = value;
+  });
+  focused_img.subscribe((value) => {
+    fs_img = value;
+  });
+  current_scroll_position.subscribe((value) => {
+    c_scroll_position = value;
+  });
   /**
-   * @param {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; }} img_param
+   * @type {(arg0: { alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; }) => any}
    */
   function enterFullScreen(img_param) {
-    console.log("entering")
-
-    show_full_img = true;
-    focused_img = img_param;
-    focused_img.original_path = img_param.src.slice(0, -4) + 'jpg';
-    current_scroll_position = y;
+    console.log('entering');
+    show_full_img.set(true);
+    focused_img.set(img_param);
+    current_scroll_position.set(y);
   }
-
-  function exitFullScreen() {
-    show_full_img = false;
-    scroll = true;
-    console.log("exiting")
-  }
-  $: scroll &&
-  setTimeout(() => {
-      console.log('is it scrolling ', scroll);
-
-      if (scroll) {window.scrollTo(0, current_scroll_position);
-      console.log('scrolling', current_scroll_position);}
-
-      scroll = false;
-    },3);
-//   $: show_full_img &&
-// setTimeout(() => {
-//     console.log('is it scrolling to top',show_full_img);
-
-//     if (show_full_img) {window.scrollTo(0, 0);
-//     console.log('scrolling', 0);}
-
-//   },3);
 </script>
 
 <svelte:window bind:scrollY={y} />
 
 <main style="margin: 0px, padding: 0px">
-  {#if show_full_img}
-    
-
-    <div class="fullscreen">
-      <h4 style=" grid-column: 3; grid-row: 1;" class="fullscreenimg description">{focused_img.alt}</h4>
-
-      <button on:click={exitFullScreen}>EXIT</button>
-      {#if focused_img.hv}
-        <img
-          class="fullscreenimg_big_h"
-          src={focused_img.original_path}
-          alt={focused_img.alt}
-        />
-        <img
-          class="fullscreenimg_small_h stretch_h"
-          src={focused_img.src}
-          alt={focused_img.alt}
-        />
-      {:else}
-        <img
-          class="fullscreenimg_big_v"
-          src={focused_img.original_path}
-          alt={focused_img.alt}
-        />
-        <img
-          class="fullscreenimg_small_v stretch_v"
-          src={focused_img.src}
-          alt={focused_img.alt}
-        />
-      {/if}
-    </div>
+  {#if full_screen}
+    <FullScreenImage />
   {:else}
-    <p class="lastupdatetime">This page was last updated on Oct 9, 2022.</p>
+    <p class="lastupdatetime">This page was last updated on Oct 16, 2022.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
 
-    <ShowingTags
-      bind:filtered_img
-      bind:filtered_tags
-      bind:show_start_message
-      bind:no_img_found
-    />
+    <ShowingTags bind:filtered_img bind:filtered_tags bind:no_img_found />
 
     {#if show_start_message}
       <p>please select as least one tag.</p>
@@ -134,9 +82,9 @@
 
     <div class="flex-container">
       {#each filtered_img as a_photo}
-        <!-- svelte-ignore a11y-missing-attribute -->
         <div class="flex-items">
           {#if a_photo.hv}
+            <!-- svelte-ignore a11y-missing-attribute -->
             <img
               class="img_hover"
               {...a_photo}
@@ -144,6 +92,7 @@
               on:click={() => enterFullScreen(a_photo)}
             />
           {:else}
+            <!-- svelte-ignore a11y-missing-attribute -->
             <img
               class="img_hover"
               {...a_photo}
@@ -198,56 +147,12 @@
       text-align: center;
     }
   }
-  h2 {
-    font-family: 'Caudex', serif;
 
-    letter-spacing: 3px;
-    font-size: 4rem;
-    margin: 0px;
-    margin-left: 10px;
-    text-align: left;
-    color: #464d4f;
-    font-stretch: condensed;
-  }
-
-  @media screen and (max-width: 600px) {
-    h2 {
-      font-size: 2.25rem;
-      text-align: center;
-    }
-  }
-  h4 {
-    font-family: 'Inknut Antiqua', serif;
-    font-size: 1.5rem;
-    color: white;
-    padding-left: 10px;
-    vertical-align: middle;
-  }
-  
   p {
     font-family: 'Piazzolla', serif;
     color: #d9dbca;
     font-size: 1.25rem;
     margin: 10px;
-  }
-  button {
-    background-color: #0f0f19;
-    border:none;
-    display: inline-flex;
-    grid-column: 1;
-    grid-row: 1;
-    height:95vh;
-    float: right;
-    align-items: center; 
-    justify-content: center; /* center the content horizontally */
-    color:#d9dbca;
-    font-size: 1.25rem;
-    font-family: 'Piazzolla', serif;
-    margin-right: 20px;
-    
-  }
-  button:hover{
-    background-color: #464d4f;
   }
   .description {
     text-align: center;
@@ -255,8 +160,6 @@
     align-self: center;
     padding-left: 20px;
     padding-right: 20px;
-
-    
   }
   .checkbox-format {
     display: inline-flex;
@@ -278,32 +181,6 @@
     display: grid;
     align-content: center;
     position: relative;
-  }
-  .fullscreen > .fullscreenimg_big_h {
-    grid-column: 2;
-    grid-row: 1;
-    z-index: -1;
-    max-width: 70vw;
-    align-self: center; 
-  }
-  .fullscreen > .fullscreenimg_big_v {
-    grid-column: 2;
-    grid-row: 1;
-    z-index: -1;
-    max-height: 90vh;
-    align-self: center; 
-  }
-  .fullscreen > .fullscreenimg_small_h {
-    grid-column: 2;
-    grid-row: 1;
-    z-index: -2;
-    align-self: center; 
-  }
-  .fullscreen > .fullscreenimg_small_v {
-    grid-column: 2;
-    grid-row: 1;
-    z-index: -2;
-    align-self: center; 
   }
   .img_hover:hover {
     opacity: 0.5;

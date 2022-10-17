@@ -2,7 +2,7 @@ export const photos = [
   {
     alt: 'Trekking',
     src: './photos/IMG_2043.webp',
-    original_path: '',
+    original_path: './photos/IMG_2043.jpg',
     tags: ['Landscape', 'Europe'],
     time: [2022, 'July', ''],
     hv: true,
@@ -10,7 +10,7 @@ export const photos = [
   {
     alt: 'Melting Origin',
     src: './photos/IMG_2176.webp',
-    original_path: '',
+    original_path: './photos/IMG_2176.jpg',
     tags: ['Landscape', 'Europe'],
     time: [2022, 'July', ''],
     hv: true,
@@ -18,7 +18,7 @@ export const photos = [
   {
     alt: 'A sheep meh like cow',
     src: './photos/IMG_2214.webp',
-    original_path: '',
+    original_path: './photos/IMG_2214.jpg',
     tags: ['Animal', 'Europe'],
     time: [2022, 'July', ''],
     hv: false,
@@ -26,7 +26,7 @@ export const photos = [
   {
     alt: 'Busy Train Station',
     src: './photos/IMG_1786.webp',
-    original_path: '',
+    original_path: './photos/IMG_1786.jpg',
     tags: ['Street', 'Europe'],
     time: [2022, 'July', ''],
     hv: true,
@@ -34,7 +34,7 @@ export const photos = [
   {
     alt: 'Hollow Passage',
     src: './photos/IMG_1807.webp',
-    original_path: '',
+    original_path: './photos/IMG_1807.jpg',
     tags: ['Structure', 'Europe', 'B&W'],
     time: [2022, '', ''],
     hv: true,
@@ -42,7 +42,7 @@ export const photos = [
   {
     alt: 'Woman in street market',
     src: './photos/IMG_1757.webp',
-    original_path: '',
+    original_path: './photos/IMG_1757.jpg',
     tags: ['Street', 'San Francisco'],
     time: [2022, '', ''],
     hv: true,
@@ -50,7 +50,7 @@ export const photos = [
   {
     alt: 'Fog',
     src: './photos/DSC00611.webp',
-    original_path: '',
+    original_path: './photos/DSC00611.jpg',
     tags: ['Street', 'Europe', 'B&W'],
     time: [2022, 'July', ''],
     hv: true,
@@ -58,7 +58,7 @@ export const photos = [
   {
     alt: 'Man Playing Guitar',
     src: './photos/IMG_1780.webp',
-    original_path: '',
+    original_path: './photos/IMG_1780.webp',
     tags: ['Street', 'San Francisco'],
     time: [2022, '', ''],
     hv: true,
@@ -66,7 +66,7 @@ export const photos = [
   {
     alt: 'SF Downhill',
     src: './photos/IMG_1782.webp',
-    original_path: '',
+    original_path: './photos/IMG_1782.jpg',
     tags: ['Street', 'San Francisco'],
     time: [2022, '', ''],
     hv: true,
@@ -95,7 +95,7 @@ export let other_collapsible_tags = [
   {
     name: 'Location',
     collapsed: true,
-    tags: ['Europe', 'San Francisco',  'Berkeley'],
+    tags: ['Europe', 'San Francisco', 'Berkeley'],
   },
   {
     name: 'Form',
