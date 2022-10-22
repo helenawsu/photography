@@ -3,56 +3,33 @@
   import FullScreenImage from './FullScreenImage.svelte';
   import {
     focused_img,
+    show_start_msg,
     show_full_img,
     current_scroll_position,
   } from './store.js';
   let c_scroll_position;
-  /**
-   * @type {number}
-   */
+  /** @type {number} */
   let y;
-
-  /**
-   * @type {boolean}
-   */
+  /**@type {boolean}*/
   let full_screen;
-  /**
-   * @type {boolean}
-   */
+  /** @type {boolean}*/
   let show_start_message;
-  /**
-   * @type {boolean}
-   */
+  /** @type {boolean}*/
   let no_img_found;
-  /**
-   * @type {string[]}
-   */
+  /** @type {string[]}*/
   let filtered_tags = [];
-  /**
-   * @type {{ alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}
-   */
+  /** @type {{ alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}*/
   let filtered_img = [];
-  /**
-   * @type {{ alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }}
-   */
-  let fs_img;
   show_full_img.subscribe((value) => {
     full_screen = value;
-  });
-  focused_img.subscribe((value) => {
-    fs_img = value;
   });
   current_scroll_position.subscribe((value) => {
     c_scroll_position = value;
   });
-  /**
-   * @type {(arg0: { alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }) => any}
-   */
+  /** @type {(arg0: { alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; }) => any}*/
   function enterFullScreen(img_param) {
-    console.log('entering');
     show_full_img.set(true);
     focused_img.set(img_param);
     current_scroll_position.set(y);
@@ -62,18 +39,19 @@
 <svelte:window bind:scrollY={y} />
 
 <main style="margin: 0px, padding: 0px">
-  {#if full_screen}
+  {#if $show_full_img}
     <FullScreenImage />
   {:else}
-    <p class="lastupdatetime">This page was last updated on Oct 16, 2022.</p>
+    <p class="lastupdatetime">This page was last updated on Oct 22, 2022.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
 
     <ShowingTags bind:filtered_img bind:filtered_tags bind:no_img_found />
 
-    {#if show_start_message}
-      <p>please select as least one tag.</p>
+    {#if $show_start_msg}
+      <br>
+      <p>Click tag category for more tags!</p>
     {/if}
 
     {#if no_img_found}
@@ -132,7 +110,6 @@
 
   h1 {
     font-family: 'Caudex', serif;
-
     letter-spacing: 3px;
     font-size: 3rem;
     margin: 0px;
@@ -152,7 +129,8 @@
     font-family: 'Piazzolla', serif;
     color: #d9dbca;
     font-size: 1.25rem;
-    margin: 10px;
+    margin: 20px;
+
   }
   .description {
     text-align: center;
@@ -198,6 +176,7 @@
       max-width: 100%;
       max-height: 25rem;
       object-fit: contain;
+      border: none;
     }
   }
 

@@ -1,10 +1,9 @@
 <script>
   import { exioCheckbox } from 'exio/svelte';
   import { photos, other_collapsible_tags, misc_tags } from './create_img.js';
+  import {show_start_msg} from './store.js';
 
-  /**
-   * @type {string[]}
-   */
+  /** @type {string[]}*/
   export let filtered_tags = [];
 
   let collapsible_tags = other_collapsible_tags;
@@ -12,10 +11,9 @@
 
   export let filtered_img = [];
 
-  /**
-   * @param {number} num
-   */
+  /** @param {number} num */
   function collapse(num) {
+    show_start_msg.set(false);
     let bo = collapsible_tags[num].collapsed;
     collapsible_tags = [
       ...collapsible_tags.slice(0, num),
@@ -28,15 +26,14 @@
     ];
   }
 
-  /**
-   * @returns { { alt: string; src: string; original_path: string;
+  /** @returns { { alt: string; src: string; original_path: string;
    * tags: string[]; time: (string | number)[]; hv: boolean; }[]}
-   * @param {string[]} filtered_tags_param
-   */
+   * @param {string[]} filtered_tags_param */
   function refresh(filtered_tags_param) {
     filtered_img = [];
     if (filtered_tags_param.includes('All')) {
       filtered_img = photos;
+      return filtered_img;
     }
     if (filtered_tags_param.length === 0) {
       filtered_img = [
@@ -71,7 +68,7 @@
 
 <div class="flex-container" style="position: relative; top: 0px;">
   {#each misc_tags as misc_tag}
-    <div class="flex-items">
+    <div style="" class="flex-items tag_groups">
       <label>
         <span>{misc_tag}</span>
         <input
@@ -88,14 +85,17 @@
 </div>
 
 <div class="flex-container">
+  
   {#each collapsible_tags as tag_group, num}
-    {#if tag_group.collapsed}
-      <button class="" on:click={() => collapse(num)}>
-        <h4>{tag_group.name}</h4></button
-      >
+  <div class = "tag_groups" style="">
+  <div class="flex-items">
+  <button  on:click={() => collapse(num)}>
+    <h4>{tag_group.name}</h4></button
+  ></div>
+    {#each tag_group.tags.slice(0, !tag_group.collapsed ? tag_group.tags.length : 2) as a_tag,index}
+      
 
       <div class="flex-items">
-        {#each tag_group.tags.slice(0, 2) as a_tag, index}
           <label>
             <span>
               {tag_group.tags[index]}
@@ -109,32 +109,10 @@
               value={tag_group.tags[index]}
             />
           </label>
-        {/each}
       </div>
       <div />
-    {:else}
-      <button class="" on:click={() => collapse(num)}
-        ><h4>{tag_group.name}</h4></button
-      >
-      <div class="flex-items">
-        {#each tag_group.tags as a_tag}
-          <label>
-            <span>
-              {a_tag}
-            </span>
-            <input
-              class="checkbox-format"
-              type="checkbox"
-              use:exioCheckbox
-              bind:group={filtered_tags}
-              name="filtered tags"
-              value={a_tag}
-            />
-          </label>
-        {/each}
-      </div>
-      <div />
-    {/if}
+    {/each}
+  </div>
   {/each}
 </div>
 
@@ -143,47 +121,66 @@
     font-family: 'Inknut Antiqua', serif;
     font-size: 1.5rem;
     color: #d9dbca;
-    padding-left: 10px;
     margin: 0;
-    padding: 0;
+    padding:0;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: normal;
     display: block;
     height: 100%;
-    font-family: 'Inknut Antiqua', serif;
-    font-size: 1.5rem;
-    color: #d9dbca;
+    border-left: #a89732 5px solid;
   }
+  @media screen and (max-width: 600px) {
+    h4 {
+      max-width: 100%;
+      font-size: 1.25rem;
+
+    }
+  }
+
   input {
     vertical-align: middle;
     position: relative;
     margin-right: 20px;
   }
-  button {
+  @media screen and (max-width: 600px) {
+    input {
+      margin-right: 10px;
+
+    }
+  }
+   button {
     background-color: #0f0f19;
     font-family: 'Inknut Antiqua', serif;
-    border-right: none;
-    border-bottom: none;
-    border-left: none;
-    border-top: none;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    color:white;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+   }
 
-    padding-top: 0px;
-    margin-right: 10px;
-    margin-top: 10px;
-  }
   button:hover {
     background-color: #464d4f;
-  }
+  } 
+  button:active {
+    background-color: #464d4f;
+  } 
 
   span {
-    top: 3px;
-    transform: translateY(42px);
-    vertical-align: top;
+    vertical-align: middle;
     position: relative;
+    bottom:3px;
   }
 
   .checkbox-format {
     display: inline-flex;
     border-color: #919cbf;
     vertical-align: -webkit-baseline-middle;
+    /* margin:0; */
+    margin-right:0;
+    padding:0;
   }
   .checkbox-format:hover {
     --exio-hover-border-color: white;
@@ -198,15 +195,20 @@
     /* background-image: linear-gradient
     (to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
     margin-left: 0px;
+    margin-right:0px;
     padding-right: 0px;
     padding-left: 15px;
-    display: block;
     color: #d9dbca;
-    border-left: solid wheat 0.5px;
+    /* display: inline-flex; */
+    border-left: solid #a89732 0.5px;
+    display: block;
   }
   @media screen and (max-width: 600px) {
     label {
       font-size: 1.25rem;
+      padding-left: 5px;
+      margin-left:5px;
+
     }
   }
 
@@ -216,8 +218,35 @@
     flex-wrap: wrap;
     margin-bottom: 0px;
   }
-
-  .flex-items {
-    padding: 10px; /* this */
+  @media screen and (max-width: 600px) {
+    .flex-container {
+      max-width: 100%;
+      flex-wrap: wrap;
+    }
   }
+  .flex-items {
+    padding: 10px; /* sthis */
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+  }
+  @media screen and (max-width: 600px) {
+    .flex-items {
+      padding:5px;
+    }
+  }
+ .tag_groups {
+  display:flex; background-color: #232421; padding: 5px; margin: 5px;
+ }
+ @media screen and (max-width: 600px) {
+    .tag_groups {
+      max-width: fit-content;
+      padding: 5px;
+      margin: 5px;
+      flex-wrap: wrap;
+      display:inline-block;
+
+    }
+  }
+
 </style>

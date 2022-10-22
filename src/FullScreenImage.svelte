@@ -4,26 +4,9 @@
     show_full_img,
     current_scroll_position,
   } from './store.js';
-
   let scroll = false;
-  /**
-   * @type {number}
-   */
-  let y;
-
-  /**
-   * @type {number}
-   */
+  /** @type {number}*/
   let c_scroll_position;
-
-  /**
-   * @type {{ alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }}
-   */
-  let fs_img;
-  focused_img.subscribe((value) => {
-    fs_img = value;
-  });
   current_scroll_position.subscribe((value) => {
     c_scroll_position = value;
   });
@@ -46,43 +29,45 @@
 </script>
 
 <div class="fullscreen">
-  <h4 style=" grid-column: 3; grid-row: 1;" class="fullscreenimg description">
-    {fs_img.alt}
+  <h4 style=" " class="fullscreenimg description">
+    {$focused_img.alt}
   </h4>
 
-  <button on:click={exitFullScreen}>EXIT</button>
-  {#if fs_img.hv}
+  {#if $focused_img.hv}
     <img
       class="fullscreenimg_big_h"
-      src={fs_img.original_path}
-      alt={fs_img.alt}
+      src={$focused_img.original_path}
+      alt={$focused_img.alt}
     />
     <img
       class="fullscreenimg_small_h stretch_h"
-      src={fs_img.src}
-      alt={fs_img.alt}
+      src={$focused_img.src}
+      alt={$focused_img.alt}
     />
   {:else}
     <img
       class="fullscreenimg_big_v"
-      src={fs_img.original_path}
-      alt={fs_img.alt}
+      src={$focused_img.original_path}
+      alt={$focused_img.alt}
     />
     <img
       class="fullscreenimg_small_v stretch_v"
-      src={fs_img.src}
-      alt={fs_img.alt}
+      src={$focused_img.src}
+      alt={$focused_img.alt}
     />
   {/if}
+  <button on:click={exitFullScreen}>EXIT</button>
+
 </div>
 
 <style>
   h4 {
     font-family: 'Inknut Antiqua', serif;
     font-size: 1.5rem;
-    color: white;
+    color: #d9dbca;
     padding-left: 10px;
     vertical-align: middle;
+    grid-column: 3; grid-row: 1;
   }
 
   button {
@@ -100,6 +85,14 @@
     font-family: 'Piazzolla', serif;
     margin-right: 20px;
   }
+  @media screen and (max-width: 600px) {
+    button{
+      height: auto;
+      margin: 0px;
+      display: inline-flex;
+      text-align:center;
+    }
+  }
   button:hover {
     background-color: #464d4f;
   }
@@ -111,8 +104,7 @@
     padding-right: 20px;
   }
 
-  @media screen and (max-width: 600px) {
-  }
+  
   .stretch_h {
     width: 70vw;
   }
@@ -124,12 +116,24 @@
     align-content: center;
     position: relative;
   }
+  @media screen and (max-width: 600px) {
+    .fullscreen {
+      max-width: 100vw;
+      display: block;
+      height:fit-content;
+    }
+  }
   .fullscreen > .fullscreenimg_big_h {
     grid-column: 2;
     grid-row: 1;
     z-index: -1;
     max-width: 70vw;
     align-self: center;
+  }
+  @media screen and (max-width: 600px) {
+    .fullscreen > .fullscreenimg_big_h {
+      display: none;
+    }
   }
   .fullscreen > .fullscreenimg_big_v {
     grid-column: 2;
@@ -138,17 +142,32 @@
     max-height: 90vh;
     align-self: center;
   }
+  @media screen and (max-width: 600px) {
+    .fullscreen > .fullscreenimg_big_v {
+      display: none;
+    }
+  }
   .fullscreen > .fullscreenimg_small_h {
     grid-column: 2;
     grid-row: 1;
     z-index: -2;
     align-self: center;
   }
+  @media screen and (max-width: 600px) {
+    .fullscreen > .fullscreenimg_small_h {
+      width: 90vw;
+    }
+  }
   .fullscreen > .fullscreenimg_small_v {
     grid-column: 2;
     grid-row: 1;
     z-index: -2;
     align-self: center;
+  }
+  @media screen and (max-width: 600px) {
+    .fullscreen > .fullscreenimg_small_v {
+      height: 70vh;
+    }
   }
   img {
     display: block;
@@ -159,9 +178,10 @@
 
   @media screen and (max-width: 600px) {
     img {
-      max-width: 100%;
-      max-height: 25rem;
+      width: 90vw;
       object-fit: contain;
+      border: none;
+
     }
   }
 </style>

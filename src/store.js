@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const show_full_img = writable(false);
+export const show_start_msg = writable(true);
 export const focused_img = writable({
   alt: 'string',
   src: 'string',

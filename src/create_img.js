@@ -24,27 +24,11 @@ export const photos = [
     hv: false,
   },
   {
-    alt: 'Busy Train Station',
-    src: './photos/IMG_1786.webp',
-    original_path: './photos/IMG_1786.jpg',
-    tags: ['Street', 'Europe'],
-    time: [2022, 'July', ''],
-    hv: true,
-  },
-  {
-    alt: 'Hollow Passage',
-    src: './photos/IMG_1807.webp',
-    original_path: './photos/IMG_1807.jpg',
-    tags: ['Structure', 'Europe', 'B&W'],
-    time: [2022, '', ''],
-    hv: true,
-  },
-  {
-    alt: 'Woman in street market',
-    src: './photos/IMG_1757.webp',
-    original_path: './photos/IMG_1757.jpg',
-    tags: ['Street', 'San Francisco'],
-    time: [2022, '', ''],
+    alt: 'Oily Green',
+    src: './photos/IMG_4493.webp',
+    original_path: './photos/IMG_4493.jpg',
+    tags: ['Phone', 'Green', 'Plants','San Francisco'],
+    time: [2022, 'September', '24'],
     hv: true,
   },
   {
@@ -55,10 +39,51 @@ export const photos = [
     time: [2022, 'July', ''],
     hv: true,
   },
+  
+  {
+    alt: 'Busy Train Station',
+    src: './photos/IMG_1786.webp',
+    original_path: './photos/IMG_1786.jpg',
+    tags: ['Street', 'Europe'],
+    time: [2022, 'July', ''],
+    hv: true,
+  },
   {
     alt: 'Man Playing Guitar',
     src: './photos/IMG_1780.webp',
     original_path: './photos/IMG_1780.webp',
+    tags: ['Street', 'San Francisco'],
+    time: [2022, '', ''],
+    hv: true,
+  },
+  {
+    alt: 'Sea Monster in Mall',
+    src: './photos/IMG_3334.webp',
+    original_path: './photos/IMG_3334.jpg',
+    tags: ['Structure', 'Phone','Europe', 'B&W'],
+    time: [2022, 'July', '27'],
+    hv: false,
+  },
+  {
+    alt: 'Watching Waterfall',
+    src: './photos/IMG_3882.JPG',
+    original_path: './photos/IMG_3882.JPG',
+    tags: ['Animal', 'Europe', 'Phone'],
+    time: [2022, 'Aug', '9'],
+    hv: false,
+  },
+  {
+    alt: 'Dorm Ceilling',
+    src: './photos/IMG_4159.JPG',
+    original_path: './photos/IMG_4159.JPG',
+    tags: ['Stucture', 'Berkeley', 'Phone'],
+    time: [2022, 'Aug', '22'],
+    hv: false,
+  },
+  {
+    alt: 'Woman in street market',
+    src: './photos/IMG_1757.webp',
+    original_path: './photos/IMG_1757.jpg',
     tags: ['Street', 'San Francisco'],
     time: [2022, '', ''],
     hv: true,
@@ -73,24 +98,16 @@ export const photos = [
   },
 
   {
-    alt: 'Man Playing Guitar',
-    src: './photos/IMG_1751.webp',
-    original_path: '',
-    tags: ['Street', 'San Francisco'],
-    time: [2022, '', ''],
-    hv: false,
-  },
-  {
     alt: 'Clock Tower',
     src: './photos/DSC00689.webp',
-    original_path: '',
+    original_path: './photos/DSC00689.jpg',
     tags: ['Berkeley'],
     time: [2022, 'September', ''],
     hv: true,
   },
 ];
 
-export let misc_tags = ['All'];
+export let misc_tags = ['All', 'Phone'];
 export let other_collapsible_tags = [
   {
     name: 'Location',
@@ -100,11 +117,16 @@ export let other_collapsible_tags = [
   {
     name: 'Form',
     collapsed: true,
-    tags: ['Street', 'Landscape', 'Animal', 'Protrait', 'Structure'],
+    tags: ['Street', 'Landscape', 'Protrait', 'Structure'],
+  },
+  {
+    name: 'Subject',
+    collapsed: true,
+    tags: ['Animal', 'Plants'],
   },
   {
     name: 'Color',
     collapsed: true,
-    tags: ['B&W'],
+    tags: ['B&W','Green'],
   },
 ];
