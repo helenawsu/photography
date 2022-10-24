@@ -42,7 +42,7 @@
   {#if $show_full_img}
     <FullScreenImage />
   {:else}
-    <p class="lastupdatetime">This page was last updated on Oct 22, 2022.</p>
+    <p class="lastupdatetime">This page was last updated on Oct 23, 2022.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
@@ -90,6 +90,9 @@
     padding: 1em;
     /* max-width: 240px; */
     /* background-color: beige; */
+  }
+  @media screen and (max-width: 600px) {
+    main {padding:0.25em;}
   }
   .lastupdatetime {
     color: #464d4f;

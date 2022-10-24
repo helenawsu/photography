@@ -78,7 +78,7 @@ export const photos = [
     original_path: './photos/IMG_4159.JPG',
     tags: ['Stucture', 'Berkeley', 'Phone'],
     time: [2022, 'Aug', '22'],
-    hv: false,
+    hv: true,
   },
   {
     alt: 'Woman in street market',

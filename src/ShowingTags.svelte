@@ -89,7 +89,13 @@
   {#each collapsible_tags as tag_group, num}
   <div class = "tag_groups" style="">
   <div class="flex-items">
+  
   <button  on:click={() => collapse(num)}>
+    {#if tag_group.collapsed}
+    <div class="triangle-right"></div>
+  {:else}
+    <div class="triangle-down"></div>
+  {/if}
     <h4>{tag_group.name}</h4></button
   ></div>
     {#each tag_group.tags.slice(0, !tag_group.collapsed ? tag_group.tags.length : 2) as a_tag,index}
@@ -97,9 +103,6 @@
 
       <div class="flex-items">
           <label>
-            <span>
-              {tag_group.tags[index]}
-            </span>
             <input
               class="checkbox-format"
               type="checkbox"
@@ -108,6 +111,10 @@
               name="filtered tags"
               value={tag_group.tags[index]}
             />
+            <span>
+              {tag_group.tags[index]}
+            </span>
+            
           </label>
       </div>
       <div />
@@ -123,17 +130,20 @@
     color: #d9dbca;
     margin: 0;
     padding:0;
-    padding-left: 10px;
+    padding-left: 0px;
     padding-right: 10px;
     line-height: normal;
-    display: block;
+    display: inline;
     height: 100%;
-    border-left: #a89732 5px solid;
+    /* border-left: #a89732 5px solid; */
   }
   @media screen and (max-width: 600px) {
     h4 {
+      /* line-height: 0; */
       max-width: 100%;
       font-size: 1.25rem;
+      /* vertical-align:-webkit-baseline-middle; */
+
 
     }
   }
@@ -200,7 +210,7 @@
     padding-left: 15px;
     color: #d9dbca;
     /* display: inline-flex; */
-    border-left: solid #a89732 0.5px;
+    /* border-left: solid #a89732 0.5px; */
     display: block;
   }
   @media screen and (max-width: 600px) {
@@ -248,5 +258,54 @@
 
     }
   }
+  .triangle-down{
+    display: inline-flex;
+    margin-left:auto;
+    margin-right:auto;
+    width:0;
+    height:0;
+    border-bottom:20px solid transparent;
+    /* border-right:5px solid transparent; */
+    border-top:20px solid transparent;
+    border-left:25px solid #ffe54d;
+    margin:0;
+    padding:0;
+    margin-bottom:10px;
+    vertical-align:middle;
+  }
+  @media screen and (max-width: 600px) {
+    .triangle-down {border-left:20px solid transparent;
+    border-bottom:0px solid transparent;
+    border-right:20px solid transparent;
+    border-top:30px solid #ffe54d;}
+    
+  }
 
+  .triangle-right{
+    display: inline-flex;
+    margin-left:auto;
+    margin-right:auto;
+    width:0;
+    height:0;
+    border-bottom:20px solid transparent;
+    /* border-right:5px solid transparent; */
+    border-top:20px solid transparent;
+    border-left:15px solid #a89732;
+    margin:0;
+    padding:0;
+    margin-right:10px;
+    vertical-align:sub;
+    transform: translateY(7px);
+
+
+  }
+  @media screen and (max-width: 600px) {
+    .triangle-right {
+      margin-right:10px;
+    border-bottom:20px solid transparent;
+    border-right:0px solid transparent;
+    border-top:20px solid transparent;
+    border-left:30px solid #a89732;}
+    
+  }
 </style>

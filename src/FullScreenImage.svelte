@@ -77,7 +77,6 @@
     grid-column: 1;
     grid-row: 1;
     height: 95vh;
-    float: right;
     align-items: center;
     justify-content: center; /* center the content horizontally */
     color: #d9dbca;
@@ -88,9 +87,12 @@
   @media screen and (max-width: 600px) {
     button{
       height: auto;
-      margin: 0px;
-      display: inline-flex;
-      text-align:center;
+      margin: 0 auto; 
+      margin-top: 10px; 
+
+  display: block;
+  width: 100vw;
+    
     }
   }
   button:hover {
@@ -166,7 +168,7 @@
   }
   @media screen and (max-width: 600px) {
     .fullscreen > .fullscreenimg_small_v {
-      height: 70vh;
+      max-height: 60vh;
     }
   }
   img {
