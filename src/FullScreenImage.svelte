@@ -57,7 +57,6 @@
     />
   {/if}
   <button on:click={exitFullScreen}>EXIT</button>
-
 </div>
 
 <style>
@@ -67,7 +66,8 @@
     color: #d9dbca;
     padding-left: 10px;
     vertical-align: middle;
-    grid-column: 3; grid-row: 1;
+    grid-column: 3;
+    grid-row: 1;
   }
 
   button {
@@ -85,14 +85,13 @@
     margin-right: 20px;
   }
   @media screen and (max-width: 600px) {
-    button{
+    button {
       height: auto;
-      margin: 0 auto; 
-      margin-top: 10px; 
+      margin: 0 auto;
+      margin-top: 10px;
 
-  display: block;
-  width: 100vw;
-    
+      display: block;
+      width: 100vw;
     }
   }
   button:hover {
@@ -106,7 +105,6 @@
     padding-right: 20px;
   }
 
-  
   .stretch_h {
     width: 70vw;
   }
@@ -122,7 +120,7 @@
     .fullscreen {
       max-width: 100vw;
       display: block;
-      height:fit-content;
+      height: fit-content;
     }
   }
   .fullscreen > .fullscreenimg_big_h {
@@ -183,7 +181,6 @@
       width: 90vw;
       object-fit: contain;
       border: none;
-
     }
   }
 </style>

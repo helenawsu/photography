@@ -1,7 +1,7 @@
 <script>
   import { exioCheckbox } from 'exio/svelte';
   import { photos, other_collapsible_tags, misc_tags } from './create_img.js';
-  import {show_start_msg} from './store.js';
+  import { show_start_msg } from './store.js';
 
   /** @type {string[]}*/
   export let filtered_tags = [];
@@ -27,13 +27,14 @@
   }
 
   /** @returns { { alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}
+   * tags: string[]; time: (string | number)[]; hv: boolean; rating: number;}[]}
    * @param {string[]} filtered_tags_param */
   function refresh(filtered_tags_param) {
     filtered_img = [];
     if (filtered_tags_param.includes('All')) {
       filtered_img = photos;
-      return filtered_img;
+      console.log(filtered_img);
+      return sortOnRating(filtered_img);
     }
     if (filtered_tags_param.length === 0) {
       filtered_img = [
@@ -44,6 +45,7 @@
           tags: [''],
           time: [''],
           hv: true,
+          rating: 0,
         },
       ];
     } else {
@@ -53,7 +55,7 @@
     }
     no_img_found = filtered_img.length === 0 && filtered_tags_param.length > 0;
 
-    return filtered_img;
+    return sortOnRating(filtered_img);
   }
 
   /**
@@ -61,15 +63,30 @@
    */
   /**
    * @type {{ alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}
+   * tags: string[]; time: (string | number)[]; hv: boolean; rating:number}[]}
    */
   $: filtered_img = refresh(filtered_tags);
+  /**@returns { { alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; rating: number;}[]}
+   * @param { { alt: string; src: string; original_path: string;
+   * tags: string[]; time: (string | number)[]; hv: boolean; rating: number;}[] } unsorted
+   */
+  function sortOnRating(unsorted) {
+    let sorted = unsorted.map((img) => ({
+      ...img,
+      rating: img.rating + Math.random() / 10.0,
+    }));
+    sorted.sort(function (a, b) {
+      return b.rating - a.rating;
+    });
+    return sorted;
+  }
 </script>
 
 <div class="flex-container" style="position: relative; top: 0px;">
   {#each misc_tags as misc_tag}
     <div style="" class="flex-items tag_groups">
-      <label>
+      <label style="padding-left: 10px; padding-right: 10px">
         <span>{misc_tag}</span>
         <input
           class="checkbox-format"
@@ -85,23 +102,20 @@
 </div>
 
 <div class="flex-container">
-  
   {#each collapsible_tags as tag_group, num}
-  <div class = "tag_groups" style="">
-  <div class="flex-items">
-  
-  <button  on:click={() => collapse(num)}>
-    {#if tag_group.collapsed}
-    <div class="triangle-right"></div>
-  {:else}
-    <div class="triangle-down"></div>
-  {/if}
-    <h4>{tag_group.name}</h4></button
-  ></div>
-    {#each tag_group.tags.slice(0, !tag_group.collapsed ? tag_group.tags.length : 2) as a_tag,index}
-      
-
+    <div class="tag_groups" style="">
       <div class="flex-items">
+        <button on:click={() => collapse(num)}>
+          {#if tag_group.collapsed}
+            <div class="triangle-right" />
+          {:else}
+            <div class="triangle-down" />
+          {/if}
+          <h4>{tag_group.name}</h4></button
+        >
+      </div>
+      {#each tag_group.tags.slice(0, !tag_group.collapsed ? tag_group.tags.length : 2) as a_tag_, index}
+        <div class="flex-items">
           <label>
             <input
               class="checkbox-format"
@@ -114,12 +128,11 @@
             <span>
               {tag_group.tags[index]}
             </span>
-            
           </label>
-      </div>
-      <div />
-    {/each}
-  </div>
+        </div>
+        <div />
+      {/each}
+    </div>
   {/each}
 </div>
 
@@ -129,7 +142,7 @@
     font-size: 1.5rem;
     color: #d9dbca;
     margin: 0;
-    padding:0;
+    padding: 0;
     padding-left: 0px;
     padding-right: 10px;
     line-height: normal;
@@ -143,8 +156,6 @@
       max-width: 100%;
       font-size: 1.25rem;
       /* vertical-align:-webkit-baseline-middle; */
-
-
     }
   }
 
@@ -156,32 +167,31 @@
   @media screen and (max-width: 600px) {
     input {
       margin-right: 10px;
-
     }
   }
-   button {
+  button {
     background-color: #0f0f19;
     font-family: 'Inknut Antiqua', serif;
     border: none;
     margin: 0px;
     padding: 0px;
-    color:white;
+    color: white;
     padding-left: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
-   }
+  }
 
   button:hover {
     background-color: #464d4f;
-  } 
+  }
   button:active {
     background-color: #464d4f;
-  } 
+  }
 
   span {
     vertical-align: middle;
     position: relative;
-    bottom:3px;
+    bottom: 3px;
   }
 
   .checkbox-format {
@@ -189,8 +199,8 @@
     border-color: #919cbf;
     vertical-align: -webkit-baseline-middle;
     /* margin:0; */
-    margin-right:0;
-    padding:0;
+    margin-right: 0;
+    padding: 0;
   }
   .checkbox-format:hover {
     --exio-hover-border-color: white;
@@ -205,7 +215,7 @@
     /* background-image: linear-gradient
     (to left, rgba(255, 217, 0, 0.43) , rgba(145, 156, 191, 0.43)); */
     margin-left: 0px;
-    margin-right:0px;
+    margin-right: 0px;
     padding-right: 0px;
     padding-left: 15px;
     color: #d9dbca;
@@ -217,8 +227,7 @@
     label {
       font-size: 1.25rem;
       padding-left: 5px;
-      margin-left:5px;
-
+      margin-left: 5px;
     }
   }
 
@@ -242,70 +251,70 @@
   }
   @media screen and (max-width: 600px) {
     .flex-items {
-      padding:5px;
+      padding: 5px;
     }
   }
- .tag_groups {
-  display:flex; background-color: #232421; padding: 5px; margin: 5px;
- }
- @media screen and (max-width: 600px) {
+  .tag_groups {
+    display: flex;
+    background-color: #232421;
+    padding: 5px;
+    margin: 5px;
+  }
+  @media screen and (max-width: 600px) {
     .tag_groups {
       max-width: fit-content;
       padding: 5px;
       margin: 5px;
       flex-wrap: wrap;
-      display:inline-block;
-
+      display: inline-block;
     }
   }
-  .triangle-down{
+  .triangle-down {
     display: inline-flex;
-    margin-left:auto;
-    margin-right:auto;
-    width:0;
-    height:0;
-    border-bottom:20px solid transparent;
+    margin-left: auto;
+    margin-right: auto;
+    width: 0;
+    height: 0;
+    border-bottom: 20px solid transparent;
     /* border-right:5px solid transparent; */
-    border-top:20px solid transparent;
-    border-left:25px solid #ffe54d;
-    margin:0;
-    padding:0;
-    margin-bottom:10px;
-    vertical-align:middle;
+    border-top: 20px solid transparent;
+    border-left: 25px solid #ffe54d;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+    vertical-align: middle;
   }
   @media screen and (max-width: 600px) {
-    .triangle-down {border-left:20px solid transparent;
-    border-bottom:0px solid transparent;
-    border-right:20px solid transparent;
-    border-top:30px solid #ffe54d;}
-    
+    .triangle-down {
+      border-left: 20px solid transparent;
+      border-bottom: 0px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 30px solid #ffe54d;
+    }
   }
-
-  .triangle-right{
+  .triangle-right {
     display: inline-flex;
-    margin-left:auto;
-    margin-right:auto;
-    width:0;
-    height:0;
-    border-bottom:20px solid transparent;
+    margin-left: auto;
+    margin-right: auto;
+    width: 0;
+    height: 0;
+    border-bottom: 20px solid transparent;
     /* border-right:5px solid transparent; */
-    border-top:20px solid transparent;
-    border-left:15px solid #a89732;
-    margin:0;
-    padding:0;
-    margin-right:10px;
-    vertical-align:sub;
+    border-top: 20px solid transparent;
+    border-left: 15px solid #a89732;
+    margin: 0;
+    padding: 0;
+    margin-right: 10px;
+    vertical-align: sub;
     transform: translateY(7px);
-
-
   }
   @media screen and (max-width: 600px) {
     .triangle-right {
-      margin-right:10px;
-    border-bottom:20px solid transparent;
-    border-right:0px solid transparent;
-    border-top:20px solid transparent;
-    border-left:30px solid #a89732;}
-    
+      margin-right: 10px;
+      border-bottom: 20px solid transparent;
+      border-right: 0px solid transparent;
+      border-top: 20px solid transparent;
+      border-left: 30px solid #a89732;
+    }
   }
 </style>

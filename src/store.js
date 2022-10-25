@@ -9,6 +9,8 @@ export const focused_img = writable({
   tags: ['string'],
   time: ['string', 0],
   hv: true,
+  rating: 0,
 });
 
 export const current_scroll_position = writable(0);
+export const filtered_image = writable([]);

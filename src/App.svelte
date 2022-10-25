@@ -19,7 +19,7 @@
   /** @type {string[]}*/
   let filtered_tags = [];
   /** @type {{ alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }[]}*/
+   * tags: string[]; time: (string | number)[]; hv: boolean; rating: number}[]}*/
   let filtered_img = [];
   show_full_img.subscribe((value) => {
     full_screen = value;
@@ -27,8 +27,11 @@
   current_scroll_position.subscribe((value) => {
     c_scroll_position = value;
   });
-  /** @type {(arg0: { alt: string; src: string; original_path: string;
-   * tags: string[]; time: (string | number)[]; hv: boolean; }) => any}*/
+
+  /**
+   * @param {{ alt: string; src: string; original_path: string; tags: string[];
+   * time: (string | number)[]; hv: boolean; rating: number; }} img_param
+   */
   function enterFullScreen(img_param) {
     show_full_img.set(true);
     focused_img.set(img_param);
@@ -42,7 +45,7 @@
   {#if $show_full_img}
     <FullScreenImage />
   {:else}
-    <p class="lastupdatetime">This page was last updated on Oct 23, 2022.</p>
+    <p class="lastupdatetime">This page was last updated on Oct 25, 2022.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
@@ -50,7 +53,7 @@
     <ShowingTags bind:filtered_img bind:filtered_tags bind:no_img_found />
 
     {#if $show_start_msg}
-      <br>
+      <br />
       <p>Click tag category for more tags!</p>
     {/if}
 
@@ -92,7 +95,9 @@
     /* background-color: beige; */
   }
   @media screen and (max-width: 600px) {
-    main {padding:0.25em;}
+    main {
+      padding: 0.25em;
+    }
   }
   .lastupdatetime {
     color: #464d4f;
@@ -133,7 +138,6 @@
     color: #d9dbca;
     font-size: 1.25rem;
     margin: 20px;
-
   }
   .description {
     text-align: center;
