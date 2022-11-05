@@ -31,7 +31,7 @@ while more:
             if '  //add here\n' in line :
                 break
     src_big = "./" + file_relative_path
-    src = src[:-3] + "webp"
+    src = src_big[:-3] + "webp"
     title = input("what do you want to title the image? *･゜ﾟ･*:.｡..｡.:*･'(*ﾟ▽ﾟ*)'･*:.｡. .｡.:*･゜ﾟ･*\n")
     raw_tags = input("what are the tags? (ex: green, yellow)（；゜０゜）\n")
     tags = raw_tags.split(", ")

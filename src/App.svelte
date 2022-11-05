@@ -1,5 +1,6 @@
 <script>
   import ShowingTags from './ShowingTags.svelte';
+  import { photos} from './create_img.js';
   import FullScreenImage from './FullScreenImage.svelte';
   import {
     focused_img,
@@ -18,6 +19,8 @@
   let no_img_found;
   /** @type {string[]}*/
   let filtered_tags = [];
+  /** @type {number}*/
+  let num_of_pic = photos.length;
   /** @type {{ alt: string; src: string; original_path: string;
    * tags: string[]; time: (string | number)[]; hv: boolean; rating: number}[]}*/
   let filtered_img = [];
@@ -45,7 +48,7 @@
   {#if $show_full_img}
     <FullScreenImage />
   {:else}
-    <p class="lastupdatetime">This page was last updated on Oct 25, 2022.</p>
+    <p class="lastupdatetime">This page was last updated on Nov 4th, 2022 with {num_of_pic} photos.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
