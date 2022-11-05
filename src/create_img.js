@@ -473,11 +473,7 @@ export const photos = [
 
 export let misc_tags = ['All', 'Phone'];
 export let other_collapsible_tags = [
-  {
-    name:'Collections',
-    collapsed:true,
-    tags:['Shape of Light'],
-  },
+  
   {
     name: 'Form',
     collapsed: true,
@@ -497,5 +493,10 @@ export let other_collapsible_tags = [
     name: 'Color',
     collapsed: true,
     tags: ['B&W', 'Green', 'Purple', 'Biege','Blue'],
+  },
+  {
+    name:'Collections',
+    collapsed:true,
+    tags:['Shape of Light'],
   },
 ];
