@@ -3,8 +3,10 @@
   import { photos, other_collapsible_tags, misc_tags } from './create_img.js';
   import { show_start_msg } from './store.js';
 
+  /** @type {string}*/
+  let featured_tag = "Shape of Light";
   /** @type {string[]}*/
-  export let filtered_tags = [];
+  let filtered_tags = [featured_tag];
 
   let collapsible_tags = other_collapsible_tags;
   export let no_img_found = false;
@@ -81,11 +83,29 @@
     });
     return sorted;
   }
+  window.onload = function() {
+    refresh(filtered_tags);
+};
 </script>
 
 <div class="flex-container" style="position: relative; top: 0px;">
-  {#each misc_tags as misc_tag}
+  {#each misc_tags as misc_tag, index}
     <div style="" class="flex-items tag_groups">
+      {#if index===0}
+      <label style="padding-left: 10px; padding-right: 10px">
+        <span>Featured: {misc_tag}</span>
+        <input
+          class="checkbox-format"
+          type="checkbox"
+          use:exioCheckbox
+          name="filtered tags"
+          value={misc_tag}
+          checked
+          bind:group={filtered_tags}
+
+        />
+      </label>
+        {:else}
       <label style="padding-left: 10px; padding-right: 10px">
         <span>{misc_tag}</span>
         <input
@@ -96,7 +116,9 @@
           name="filtered tags"
           value={misc_tag}
         />
+        
       </label>
+      {/if}
     </div>
   {/each}
 </div>

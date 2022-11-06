@@ -468,10 +468,19 @@ export const photos = [
     hv: true,
     rating: 7,
   },
+  {
+    alt: 'Untitled',
+    src: './photos/IMG_2400_1.webp',
+    original_path: './photos/IMG_2400_1.jpg',
+    tags: ['Shape of Light', 'Plants', 'Europe'],
+    time: ['2022', 'Aug', '6'],
+    hv: true,
+    rating: 6.5,
+  },
   //add here
 ];
 
-export let misc_tags = ['All', 'Phone'];
+export let misc_tags = ['Shape of Light','All', 'Phone'];
 export let other_collapsible_tags = [
   
   {
