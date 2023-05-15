@@ -704,8 +704,8 @@ export const photos = [
   },
   //add here
 ];
-
-export let misc_tags = ['Shape of Light','All', 'Phone'];
+// change featured here
+export let misc_tags = ['Berkeley Botanical Garden','All', 'Phone'];
 export let other_collapsible_tags = [
   
   {

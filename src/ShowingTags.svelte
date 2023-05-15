@@ -4,7 +4,7 @@
   import { show_start_msg } from './store.js';
 
   /** @type {string}*/
-  let featured_tag = "Shape of Light";
+  let featured_tag = "Berkeley Botanical Garden";
   /** @type {string[]}*/
   let filtered_tags = [featured_tag];
 
