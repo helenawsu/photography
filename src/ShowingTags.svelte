@@ -58,8 +58,6 @@
       filtered_img = sortOnRating(photos.filter((photo) =>
         filtered_tags.every((tag) => photo.tags.includes(tag))
       ));
-      // @ts-ignore
-      filtered_image.update(n => filtered_img);
     }
     no_img_found = filtered_img.length === 0 && filtered_tags_param.length > 0;
 
