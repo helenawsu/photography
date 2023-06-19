@@ -7,6 +7,7 @@
     show_start_msg,
     show_full_img,
     current_scroll_position,
+    filtered_image,
   } from './store.js';
   let c_scroll_position;
   /** @type {number} */
@@ -23,7 +24,7 @@
   let num_of_pic = photos.length;
   /** @type {{ alt: string; src: string; original_path: string;
    * tags: string[]; time: (string | number)[]; hv: boolean; rating: number}[]}*/
-  let filtered_img = [];
+  let filtered_img;
   show_full_img.subscribe((value) => {
     full_screen = value;
   });
@@ -31,6 +32,7 @@
     c_scroll_position = value;
   });
 
+  
   /**
    * @param {{ alt: string; src: string; original_path: string; tags: string[];
    * time: (string | number)[]; hv: boolean; rating: number; }} img_param
@@ -48,12 +50,12 @@
   {#if $show_full_img}
     <FullScreenImage />
   {:else}
-    <p class="lastupdatetime">This page was last updated on May 14th, 2023 with {num_of_pic} photos.</p>
+    <p class="lastupdatetime">This page was last updated on Jun 19th, 2023 with {num_of_pic} photos.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />
 
-    <ShowingTags bind:filtered_img bind:no_img_found />
+    <ShowingTags bind:no_img_found bind:filtered_tags/>
 
     {#if $show_start_msg}
       <br />
@@ -65,7 +67,7 @@
     {/if}
 
     <div class="flex-container">
-      {#each filtered_img as a_photo}
+      {#each $filtered_image as a_photo}
         <div class="flex-items">
           {#if a_photo.hv}
             <!-- svelte-ignore a11y-missing-attribute -->

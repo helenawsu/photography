@@ -483,8 +483,8 @@ export const photos = [
     original_path: './photos/IMG_3227.jpg',
     tags: ['Berkeley', 'Plants', 'Green','Berkeley Botanical Garden'],
     time: ['2023', 'May', '11'],
-    hv: true,
-    rating: 9,
+    hv: false,
+    rating: 7,
   },
   {
     alt: 'Egg Flower',
@@ -502,7 +502,7 @@ export const photos = [
     tags: ['Plants', 'Berkeley', 'Yellow','Berkeley Botanical Garden'],
     time: ['2023', 'May', '11'],
     hv: true,
-    rating: 9.5,
+    rating: 7.5,
   },
   {
     alt: 'Plant Jelly',
@@ -533,8 +533,8 @@ export const photos = [
   },
   {
     alt: 'A Bowl of Rice Flower',
-    src: './photos/IMG_3291.webp',
-    original_path: './photos/IMG_3291.jpg',
+    src: './photos/IMG_3291_1.webp',
+    original_path: './photos/IMG_3291_1.jpg',
     tags: ['Plants', 'Berkeley', 'White','Berkeley Botanical Garden'],
     time: ['2023', 'May', '11'],
     hv: true,
@@ -704,8 +704,8 @@ export const photos = [
   },
   //add here
 ];
-
-export let misc_tags = ['Shape of Light','All', 'Phone'];
+// change featured here
+export let misc_tags = ['Berkeley Botanical Garden','All', 'Phone'];
 export let other_collapsible_tags = [
   
   {
@@ -726,7 +726,7 @@ export let other_collapsible_tags = [
   {
     name: 'Color',
     collapsed: true,
-    tags: ['B&W', 'Green', 'Purple', 'Biege','Blue'],
+    tags: ['B&W', 'Green', 'Purple', 'Biege','Blue','Pink','Rainbow'],
   },
   {
     name:'Collections',

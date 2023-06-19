@@ -3,16 +3,25 @@
     focused_img,
     show_full_img,
     current_scroll_position,
+    filtered_image,
   } from './store.js';
   let scroll = false;
   /** @type {number}*/
   let c_scroll_position;
+  /**
+   * @type {{ alt: string; src: string; original_path: string; tags: string[]; time: (string | number)[]; hv: boolean; rating: number; }[]}
+   */
+  let filtered_img;
   current_scroll_position.subscribe((value) => {
     c_scroll_position = value;
+  });
+  filtered_image.subscribe((value) => {
+    filtered_img = value;
   });
   function exitFullScreen() {
     scroll = true;
     console.log('exiting');
+    console.log("what are my images," , $filtered_image);
     show_full_img.set(false);
   }
   $: show_full_img &&

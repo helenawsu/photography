@@ -1,17 +1,22 @@
 <script>
   import { exioCheckbox } from 'exio/svelte';
   import { photos, other_collapsible_tags, misc_tags } from './create_img.js';
-  import { show_start_msg } from './store.js';
+  import { show_start_msg, filtered_image } from './store.js';
 
   /** @type {string}*/
-  let featured_tag = "Shape of Light";
+  let featured_tag = "Berkeley Botanical Garden";
   /** @type {string[]}*/
-  let filtered_tags = [featured_tag];
+  export let filtered_tags = [];
+  let feature = true;
 
   let collapsible_tags = other_collapsible_tags;
   export let no_img_found = false;
+  
 
-  export let filtered_img = [];
+  /**
+   * @type {string | any[]}
+   */
+   export let filtered_img = [];
 
   /** @param {number} num */
   function collapse(num) {
@@ -32,7 +37,6 @@
    * tags: string[]; time: (string | number)[]; hv: boolean; rating: number;}[]}
    * @param {string[]} filtered_tags_param */
   function refresh(filtered_tags_param) {
-    filtered_img = [];
     if (filtered_tags_param.includes('All')) {
       filtered_img = photos;
       console.log(filtered_img);
@@ -51,9 +55,11 @@
         },
       ];
     } else {
-      filtered_img = photos.filter((photo) =>
+      filtered_img = sortOnRating(photos.filter((photo) =>
         filtered_tags.every((tag) => photo.tags.includes(tag))
-      );
+      ));
+      // @ts-ignore
+      filtered_image.update(n => filtered_img);
     }
     no_img_found = filtered_img.length === 0 && filtered_tags_param.length > 0;
 
@@ -68,6 +74,7 @@
    * tags: string[]; time: (string | number)[]; hv: boolean; rating:number}[]}
    */
   $: filtered_img = refresh(filtered_tags);
+ // @ts-ignore
   /**@returns { { alt: string; src: string; original_path: string;
    * tags: string[]; time: (string | number)[]; hv: boolean; rating: number;}[]}
    * @param { { alt: string; src: string; original_path: string;
@@ -81,9 +88,14 @@
     sorted.sort(function (a, b) {
       return b.rating - a.rating;
     });
+    filtered_image.update(n => sorted);
     return sorted;
   }
   window.onload = function() {
+    if (feature) {
+      filtered_tags = [featured_tag];
+    }
+    feature = false;
     refresh(filtered_tags);
 };
 </script>
