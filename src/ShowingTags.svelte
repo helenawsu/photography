@@ -4,7 +4,8 @@
   import { show_start_msg, filtered_image } from './store.js';
 
   /** @type {string}*/
-  let featured_tag = "Berkeley Botanical Garden";
+  // change featured tag here
+  let featured_tag = "Birds of Shenzhen Bay";
   /** @type {string[]}*/
   export let filtered_tags = [];
   let feature = true;
