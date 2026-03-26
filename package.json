@@ -34,7 +34,7 @@
     "build": "rollup -c",
     "dev:rollup": "rollup -c -w",
     "dev:livereload": "rollup -c -w --environment LIVERELOAD",
-    "dev:nollup": "nollup -c --hot --port 5000 --content-base ./public",
+    "dev:nollup": "nollup -c --hot --port 3000 --content-base ./public",
     "dev:lan": "npm run dev:livereload > /dev/null & npm run start -- --dev --host 0.0.0.0",
     "dev": "npm run dev:nollup",
     "type:check": "svelte-check --tsconfig tsconfig.json",

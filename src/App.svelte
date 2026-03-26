@@ -50,7 +50,7 @@
   {#if $show_full_img}
     <FullScreenImage />
   {:else}
-    <p class="lastupdatetime">This page was last updated on Jan 14th, 2024 with {num_of_pic} photos.</p>
+    <p class="lastupdatetime">This page was last updated on March 26th, 2026 with {num_of_pic} photos.</p>
     <h1 style="padding-bottom: 10px">Helena Su Photograhpy</h1>
 
     <br />

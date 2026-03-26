@@ -5,7 +5,7 @@
 
   /** @type {string}*/
   // change featured tag here
-  let featured_tag = "Birds of Shenzhen Bay";
+  let featured_tag = "Commission Portfolio";
   /** @type {string[]}*/
   export let filtered_tags = [];
   let feature = true;
