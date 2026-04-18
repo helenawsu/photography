@@ -42,6 +42,58 @@
     focused_img.set(img_param);
     current_scroll_position.set(y);
   }
+
+  function reorderForPacking(photos) {
+    if (typeof window === 'undefined' || photos.length === 0) return photos;
+
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const containerWidth = vw - 32;
+    const itemPadding = 20;
+
+    const estW = (p) =>
+      p.hv
+        ? Math.min(600, 0.44 * vw) + itemPadding
+        : Math.min(500, 0.52 * vh) * 0.667 + itemPadding;
+
+    const n = photos.length;
+    const widths = photos.map(estW);
+    const placed = new Array(n).fill(false);
+    const result = [];
+    let rowWidth = 0;
+
+    for (let pos = 0; pos < n; pos++) {
+      const pool = [];
+      for (let j = Math.max(0, pos - 2); j <= Math.min(n - 1, pos + 2); j++) {
+        if (!placed[j]) pool.push(j);
+      }
+
+      const urgent = pool.filter((j) => j <= pos - 2);
+      const candidates = urgent.length > 0 ? urgent : pool;
+
+      const remaining = containerWidth - rowWidth;
+      let best = candidates[0];
+      let bestScore = Infinity;
+
+      for (const j of candidates) {
+        const w = widths[j];
+        const score = w <= remaining ? remaining - w : remaining - w + containerWidth;
+        if (score < bestScore) {
+          bestScore = score;
+          best = j;
+        }
+      }
+
+      placed[best] = true;
+      result.push(photos[best]);
+      rowWidth += widths[best];
+      if (rowWidth > containerWidth) rowWidth = widths[best];
+    }
+
+    return result;
+  }
+
+  $: reordered_photos = reorderForPacking($filtered_image);
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -67,14 +119,14 @@
     {/if}
 
     <div class="flex-container">
-      {#each $filtered_image as a_photo}
+      {#each reordered_photos as a_photo}
         <div class="flex-items">
           {#if a_photo.hv}
             <!-- svelte-ignore a11y-missing-attribute -->
             <img
               class="img_hover"
               {...a_photo}
-              style="width:600px"
+              style="width:min(600px, 44vw)"
               on:click={() => enterFullScreen(a_photo)}
             />
           {:else}
@@ -82,7 +134,7 @@
             <img
               class="img_hover"
               {...a_photo}
-              style="height:500px"
+              style="height:min(500px, 52vh)"
               on:click={() => enterFullScreen(a_photo)}
             />
           {/if}
@@ -197,6 +249,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 0px;
+    align-items: flex-start;
   }
 
   .flex-items {
