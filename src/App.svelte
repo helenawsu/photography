@@ -237,6 +237,8 @@
 
   @media screen and (max-width: 600px) {
     img {
+      width: auto !important;
+      height: auto !important;
       max-width: 100%;
       max-height: 25rem;
       object-fit: contain;
